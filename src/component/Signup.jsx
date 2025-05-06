@@ -1,177 +1,235 @@
 import React, { useState } from "react";
 import axios from "axios";
-import swal from "sweetalert";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
 
 const API_BASE_URL = "https://localhost:7026/api/Users";
 
 function Signup() {
-    const [formdata, setformData] = useState({
-        name: "",
-        email: "",
-        phoneNo: "",
-        password: ""
-    });
+  const [formdata, setFormData] = useState({
+    name: "",
+    email: "",
+    phoneNo: "",
+    password: ""
+  });
 
-    const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formdata, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setformData({
-            ...formdata,
-            [name]: value
-        });
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
 
-        // clear the field
-        setErrors({
-            ...errors,
-            [name]: ""
-        });
-    };
+  const validateForm = () => {
+    const { name, email, phoneNo, password } = formdata;
+    let formErrors = {};
 
-    const validateEmail = (email) => {
-        const re = /\S+@\S+\.\S+/;
-        return re.test(email);
-    };
+    if (!name.trim()) formErrors.name = "Name is required!";
+    if (!email.trim()) formErrors.email = "Email is required!";
+    else if (!validateEmail(email)) formErrors.email = "Enter a valid email!";
+    if (!phoneNo.trim()) formErrors.phoneNo = "Phone number is required!";
+    else if (phoneNo.length !== 10) formErrors.phoneNo = "Phone number must be 10 digits!";
+    if (!password.trim()) formErrors.password = "Password is required!";
+    else if (password.length < 6) formErrors.password = "Password must be at least 6 characters!";
 
-    const validateForm = () => {
-        let formErrors = {};
-        const { name, email, phoneNo, password } = formdata;
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
 
-        if (!name.trim()) formErrors.name = "Name is required!";
-        if (!email.trim()) formErrors.email = "Email is required!";
-        else if (!validateEmail(email)) formErrors.email = "Enter a valid email!";
+  const sendOtp = async () => {
+    try {
+      const res = await axios.post(`${API_BASE_URL}/SendOTP`, { email: formdata.email }, { withCredentials: true });
+      if (res.data.success) {
+        setIsOtpSent(true);
+        Swal.fire("Success", res.data.message, "success");
+      } else {
+        Swal.fire("Error", res.data.message, "error");
+      }
+    } catch {
+      Swal.fire("Error", "Failed to send OTP!", "error");
+    }
+  };
+  
 
-        if (!phoneNo.trim()) formErrors.phoneNo = "Phone number is required!";
-        else if (phoneNo.length != 10 )
-            formErrors.phoneNo = "Enter a valid phone number!";
-
-        if (!password.trim()) formErrors.password = "Password is required!";
-        else if (password.length < 6)
-            formErrors.password = "Password must be at least 6 characters!";
-
-        setErrors(formErrors);
-        return Object.keys(formErrors).length === 0;
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!validateForm()) return;
-
-        try {
-            const response = await axios.post(`${API_BASE_URL}/Register`, formdata);
-            if (response.data.success) {
-                swal("Success", "User registered successfully!", "success");
-                setformData({
-                    name: "",
-                    email: "",
-                    phoneNo: "",
-                    password: ""
-                });
-                setErrors({});
-                navigate("/");
-            } else {
-                swal("Error", response.data.message, "error");
+  const verifyOtp = async () => {
+    try {
+        const response = await axios.post(
+          `${API_BASE_URL}/VerifyOTP`,
+          {
+            email: formdata.email,
+            otp: otp
+          },
+          {
+            withCredentials: true, // This must be inside the 3rd config object
+            headers: {
+              "Content-Type": "application/json"
             }
-        } catch (error) {
-            console.error("Registration failed:", error);
-            swal("Error", "Something went wrong during registration!", "error");
-        }
-    };
+          }
+        );
+  
+      if (response.data.success) {
+        setIsOtpVerified(true);
+        setIsOtpSent(false);
+        Swal.fire("Success", response.data.message, "success");
+      } else {
+        Swal.fire("Error", response.data.message, "error");
+      }
+  
+    } catch (error) {
+      console.error("OTP Verification Error:", error.response?.data || error.message);
+      Swal.fire("Error", error.response?.data?.message || "Invalid or expired OTP!", "error");
+    }
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    if (!isOtpVerified) {
+      Swal.fire("Error", "Please verify OTP before registering!", "error");
+      return;
+    }
 
-    return (
-        <div className="max-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">Registration Page</h2>
+    try {
+      const res = await axios.post(`${API_BASE_URL}/Register`, formdata);
+      if (res.data.success) {
+        Swal.fire("Success", "User registered successfully!", "success");
+        setFormData({ name: "", email: "", phoneNo: "", password: "" });
+        setErrors({});
+        navigate("/"); // Navigate to the login page or home page
+      } else {
+        Swal.fire("Error", res.data.message, "error");
+      }
+    } catch {
+      Swal.fire("Error", "Something went wrong during registration!", "error");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 px-6">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="text-center text-3xl font-bold text-gray-900">Registration Page</h2>
+      </div>
+
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-6 shadow sm:rounded-lg">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                name="name"
+                type="text"
+                value={formdata.name}
+                onChange={handleChange}
+                placeholder="Enter Name"
+                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring focus:ring-blue-500"
+              />
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        {/* Name */}
-                        <div>
-                            <label htmlFor="name" className="text-left block text-sm font-medium text-gray-700">Name</label>
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                value={formdata.name}
-                                onChange={handleChange}
-                                placeholder="Enter Name"
-                                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            />
-                            {errors.name && <p className="text-left text-red-500 text-sm mt-1">{errors.name}</p>}
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label htmlFor="email" className="text-left block text-sm font-medium text-gray-700">Email address</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                value={formdata.email}
-                                onChange={handleChange}
-                                placeholder="Enter Email"
-                                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            />
-                            {errors.email && <p className="text-left text-red-500 text-sm mt-1">{errors.email}</p>}
-                        </div>
-
-                        {/* Phone */}
-                        <div>
-                            <label htmlFor="phoneNo" className="text-left block text-sm font-medium text-gray-700">Mobile Number</label>
-                            <input
-                                id="phoneNo"
-                                name="phoneNo"
-                                type="text"
-                                value={formdata.phoneNo}
-                                onChange={handleChange}
-                                placeholder="Enter Mobile Number"
-                                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            />
-                            {errors.phoneNo && <p className="text-left text-red-500 text-sm mt-1">{errors.phoneNo}</p>}
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <label htmlFor="password" className="text-left text-left block text-sm font-medium text-gray-700">Password</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={formdata.password}
-                                onChange={handleChange}
-                                placeholder="Enter Password"
-                                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            />
-                            {errors.password && <p className="text-left text-red-500 text-sm mt-1">{errors.password}</p>}
-                        </div>
-
-                        {/* Submit */}
-                        <div>
-                            <button
-                                type="submit"
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            >
-                                Register
-                            </button>
-                        </div>
-                    </form>
-
-                    {/* Already registered link */}
-                    <div className="mt-6 text-center">
-                        <span className="text-gray-600">Already have an account?</span>
-                        <Link to="/" className="text-blue-600 ml-2 hover:underline">Sign in</Link>
-                    </div>
-                </div>
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                name="email"
+                type="email"
+                value={formdata.email}
+                onChange={handleChange}
+                placeholder="Enter Email"
+                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring focus:ring-blue-500"
+              />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <input
+                name="phoneNo"
+                type="text"
+                value={formdata.phoneNo}
+                onChange={handleChange}
+                placeholder="Enter Phone"
+                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring focus:ring-blue-500"
+              />
+              {errors.phoneNo && <p className="text-red-500 text-sm mt-1">{errors.phoneNo}</p>}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Password</label>
+              <input
+                name="password"
+                type="password"
+                value={formdata.password}
+                onChange={handleChange}
+                placeholder="Enter Password"
+                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring focus:ring-blue-500"
+              />
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+            </div>
+
+            {/* OTP Input */}
+            {isOtpSent && !isOtpVerified && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Enter OTP</label>
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="OTP sent to email"
+                  className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+                />
+                <button
+                  type="button"
+                  className="w-full mt-2 bg-green-600 text-white py-2 rounded"
+                  onClick={verifyOtp}
+                >
+                  Verify OTP
+                </button>
+              </div>
+            )}
+
+            {/* Send OTP Button */}
+            {!isOtpSent && !isOtpVerified && (
+              <button
+                type="button"
+                className="w-full bg-blue-500 text-white py-2 rounded"
+                onClick={sendOtp}
+              >
+                Send OTP
+              </button>
+            )}
+
+            {/* Register Button */}
+            {isOtpVerified && (
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              >
+                Register
+              </button>
+            )}
+          </form>
+
+          <div className="mt-6 text-center">
+            <span className="text-gray-600">Already have an account?</span>
+            <Link to="/" className="text-blue-600 ml-2 hover:underline">Sign in</Link>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default Signup;
-
