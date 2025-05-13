@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2';  // Import SweetAlert2
-import { useNavigate } from 'react-router-dom';  // Import React Router's useNavigate
+import Swal from 'sweetalert2'; 
+import { useNavigate, useParams } from 'react-router-dom';
 
-const AddProduct = () => {
-  const navigate = useNavigate();  // Use navigate for navigation
+const EditProduct = () => {
+  const navigate = useNavigate();
+  const { productId } = useParams();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
@@ -14,12 +15,39 @@ const AddProduct = () => {
   const [stock, setStock] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
+  const [existingImageUrl, setExistingImageUrl] = useState('');
 
-  // Fetch categories on mount
+  // Fetch product details
+  useEffect(() => {
+    axios.get(`https://localhost:7026/api/Products/GetProductById/${productId}`)
+      .then(res => {
+        const product = res.data;
+        if (product) {
+          setProductName(product.name);
+          setPrice(product.price);
+          setStock(product.stock);
+          setDescription(product.description);
+          setSelectedCategoryId(product.categoryId);
+          setSelectedBrandId(product.brandId);
+          setExistingImageUrl(product.imageUrl);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching product details:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Product Not Found',
+          text: 'The product you are trying to edit does not exist.',
+        });
+        navigate('/admin/ListProduct');
+      });
+  }, [productId, navigate]);
+
+  // Fetch categories
   useEffect(() => {
     axios.get('https://localhost:7026/api/Categories/GetCategory')
       .then(res => {
-        if (res.data && Array.isArray(res.data.category)) {
+        if (Array.isArray(res.data.category)) {
           setCategories(res.data.category);
         }
       })
@@ -46,6 +74,7 @@ const AddProduct = () => {
     }
   }, [selectedCategoryId]);
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,38 +85,30 @@ const AddProduct = () => {
     formData.append('price', price);
     formData.append('stock', stock);
     formData.append('description', description);
+    
+    // Append image if present
     if (image) {
-      formData.append('imageUrl', image); // Matches backend field name
+      formData.append('imageUrl', image);
+    } else {
+      // Keep the existing image if no new one is uploaded
+      formData.append('imageUrl', existingImageUrl);
     }
 
-    axios.post('https://localhost:7026/api/Products/AddProduct', formData)
+    axios.put(`https://localhost:7026/api/Products/UpdateProduct/${productId}`, formData)
       .then(() => {
-        // Show SweetAlert notification on success
         Swal.fire({
           icon: 'success',
-          title: 'Product Added!',
-          text: 'Your product has been successfully added.',
+          title: 'Product Updated!',
+          text: 'Your product has been successfully updated.',
           confirmButtonText: 'Ok',
         }).then((result) => {
           if (result.isConfirmed) {
-            // Navigate to ListProduct Page upon confirmation
             navigate('/admin/ListProduct');
-  // Adjust the route as needed
           }
         });
-
-        // Reset form after success
-        setProductName('');
-        setSelectedCategoryId('');
-        setSelectedBrandId('');
-        setPrice('');
-        setStock('');
-        setDescription('');
-        setImage(null);
-        setBrands([]);
       })
       .catch(error => {
-        console.error('Error adding product:', error);
+        console.error('Error updating product:', error);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -98,7 +119,7 @@ const AddProduct = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">Add Product</h1>
+      <h1 className="text-3xl font-bold mb-6">Edit Product</h1>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">Product Name</label>
@@ -188,8 +209,10 @@ const AddProduct = () => {
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
             className="w-full mt-1"
-            required
           />
+          {existingImageUrl && (
+            <img src={`https://localhost:7026${existingImageUrl}`} alt="Existing product" className="mt-2 max-w-xs" />
+          )}
         </div>
 
         <div className="flex justify-end">
@@ -197,7 +220,7 @@ const AddProduct = () => {
             type="submit"
             className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
           >
-            Add Product
+            Update Product
           </button>
         </div>
       </form>
@@ -205,4 +228,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;
