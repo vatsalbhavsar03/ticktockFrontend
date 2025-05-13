@@ -5,9 +5,11 @@ import ProtectedRoute from './component/ProtectedRoute';
 import UserDashBoard from './component/user/UserDashboard';
 import AdminDashboard from './component/Admin/AdminDashboard';
 import AddProduct from './component/admin/AddProduct';
+import AddBrand from './component/admin/AddBrand';  // Import your AddBrand component
 import AdminLayout from './component/admin/AdminLayout';
 import ListProduct from './component/admin/ListProduct';
 import EditProduct from './component/admin/EditProduct';
+import ListBrand from './component/admin/ListBrand';
 
 function App() {
   return (
@@ -41,8 +43,10 @@ function App() {
 
           {/* Admin Product Routes */}
           <Route path="addProduct" element={<AddProduct />} />
+          <Route path="addBrand" element={<AddBrand />} />  {/* Add AddBrand route here */}
           <Route path="ListProduct" element={<ListProduct />} />
           <Route path="EditProduct/:productId" element={<EditProduct />} />
+          <Route path="ListBrand" element={<ListBrand />} />
         </Route>
       </Routes>
     </Router>

@@ -10,6 +10,12 @@ import {
 } from "react-icons/fa";
 import { VscWatch } from "react-icons/vsc";
 import '../admin/AdminLayout.css';
+import { BiSolidCategory } from "react-icons/bi";
+import { TbDeviceWatchFilled } from "react-icons/tb";
+import { AiFillDashboard } from "react-icons/ai";
+import { TbBrandBootstrap } from "react-icons/tb";
+
+
 
 
 const AdminLayout = () => {
@@ -20,7 +26,7 @@ const AdminLayout = () => {
 
     const handleLogout = () => {
         localStorage.clear();
-        navigate("/AdminandFacultyLogin");
+        navigate("/");
     };
 
     return (
@@ -45,21 +51,24 @@ const AdminLayout = () => {
 
                 <ul className="nav-menu">
                     <li onClick={() => navigate("/admin/AdminDashboard")}>
-                        <FaTachometerAlt className="icon" />
+                        <AiFillDashboard style={{ fontSize: '30px' }} />
                         <span>Dashboard</span>
                     </li>
+                    <li onClick={() => navigate("/admin/faculties")}>
+                        <BiSolidCategory style={{ fontSize: '30px' }} />
+                        <span>Category</span>
+                    </li>
+                    <li onClick={() => navigate("/admin/ListBrand")}>
+                        <TbBrandBootstrap style={{ fontSize: '30px' }} />
+
+                        <span>Brand</span>
+                    </li>
                     <li onClick={() => navigate("/admin/ListProduct")}>
-                        <FaUniversity className="icon" />
+                        <TbDeviceWatchFilled style={{fontSize:"30px"}} />
                         <span>Products</span>
                     </li>
-                    <li onClick={() => navigate("/admin/faculties")}>
-                        <FaChalkboardTeacher className="icon" />
-                        <span>Faculties</span>
-                    </li>
-                    <li onClick={() => navigate("/admin/students")}>
-                        <FaUserGraduate className="icon" />
-                        <span>Students</span>
-                    </li>
+                    
+                    
                     <li onClick={() => navigate("/admin/faculty-assignment")}>
                         <FaChalkboardTeacher className="icon" />
                         <span>Faculty Assignment</span>
