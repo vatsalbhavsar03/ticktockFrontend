@@ -32,35 +32,36 @@ const ListBrand = () => {
     navigate(`/admin/editBrand/${brandId}`);
   };
 
-  const handleDelete = (brandId) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will delete the brand permanently!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`https://localhost:7026/api/Brands/DeleteBrand?id=${brandId}`)
-          .then(() => {
-            Swal.fire({
-              title: 'Deleted!',
-              text: 'Brand has been deleted.',
-              icon: 'success',
-              timer: 1500,
-              showConfirmButton: false
-            });
-            fetchBrands(); // Refresh list
-          })
-          .catch(err => {
-            console.error('Error deleting brand:', err);
-            Swal.fire('Error', 'This Brand is Use in Product', 'error');
+ const handleDelete = (brandId) => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'This will delete the brand permanently!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios.delete(`https://localhost:7026/api/Brands/DeleteBrand?Brandid=${brandId}`)
+        .then(() => {
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Brand has been deleted.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
           });
-      }
-    });
-  };
+          fetchBrands(); // Refresh the brand list
+        })
+        .catch(err => {
+          console.error('Error deleting brand:', err);
+          Swal.fire('Error', 'This Brand is used in a Product and cannot be deleted.', 'error');
+        });
+    }
+  });
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

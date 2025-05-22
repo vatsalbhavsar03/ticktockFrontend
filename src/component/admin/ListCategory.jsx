@@ -35,38 +35,39 @@ const ListCategory = () => {
   };
 
   const handleDelete = (categoryId) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'This action will permanently delete the category!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`https://localhost:7026/api/Categories/DeleteCategory?id=${categoryId}`)
-          .then(() => {
-            Swal.fire({
-              title: 'Deleted!',
-              text: 'Category has been deleted.',
-              icon: 'success',
-              timer: 1500,
-              showConfirmButton: false
-            });
-            fetchCategories(); // Refresh category list
-          })
-          .catch(error => {
-            console.error('Error deleting category:', error);
-            Swal.fire({
-              title: 'Error!',
-              text: 'Failed to delete category.',
-              icon: 'error'
-            });
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'This action will permanently delete the category!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios.delete(`https://localhost:7026/api/Categories/DeleteCategory?Categoryid=${categoryId}`)
+        .then((res) => {
+          Swal.fire({
+            title: 'Deleted!',
+            text: res.data.message || 'Category has been deleted.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
           });
-      }
-    });
-  };
+          fetchCategories(); // Refresh category list
+        })
+        .catch(error => {
+          console.error('Error deleting category:', error);
+          Swal.fire({
+            title: 'Error!',
+            text: error.response?.data?.message || 'Failed to delete category.',
+            icon: 'error'
+          });
+        });
+    }
+  });
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

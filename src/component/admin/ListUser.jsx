@@ -12,16 +12,17 @@ const ListUser = () => {
   }, []);
 
   const fetchUsers = () => {
-    axios.get('https://localhost:7026/api/Users/GetUsers')
-      .then(response => {
-        setUsers(response.data || []);
-      })
-      .catch(error => {
-        console.error('Error fetching users:', error);
-        setError('Error fetching users');
-        setUsers([]);
-      });
-  };
+  axios.get('https://localhost:7026/api/Users/GetUsers')
+    .then(response => {
+      setUsers(response.data.users || []);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+      setError('Error fetching users');
+      setUsers([]);
+    });
+};
+
 
   const handleDelete = (userId) => {
     Swal.fire({

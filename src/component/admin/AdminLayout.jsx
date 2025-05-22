@@ -10,7 +10,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { TbDeviceWatchFilled } from "react-icons/tb";
 import { AiFillDashboard } from "react-icons/ai";
 import { TbBrandBootstrap } from "react-icons/tb";
-
+import { FaUser } from "react-icons/fa";
 
 
 
@@ -49,6 +49,10 @@ const AdminLayout = () => {
                     <li onClick={() => navigate("/admin/AdminDashboard")}>
                         <AiFillDashboard style={{ fontSize: '30px' }} />
                         <span>Dashboard</span>
+                    </li>
+                     <li onClick={() => navigate("/admin/ListUser")}>
+                        <FaUser  style={{ fontSize: '30px' }} />
+                        <span>Users</span>
                     </li>
                     <li onClick={() => navigate("/admin/ListCategory")}>
                         <BiSolidCategory style={{ fontSize: '30px' }} />

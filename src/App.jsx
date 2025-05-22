@@ -14,6 +14,7 @@ import ListCategory from './component/admin/ListCategory';
 import AddCategory from './component/admin/AddCategory';
 import EditCategory from './component/admin/EditCategory';
 import EditBrand from './component/admin/EditBrand';
+import ListUser from './component/admin/ListUser';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           <Route path="addCategory" element={<AddCategory />} />
           <Route path="editCategory/:id" element={<EditCategory />} />
           <Route path="editBrand/:id" element={<EditBrand />} />
+          <Route path="ListUser" element={<ListUser />} />
           
         </Route>
       </Routes>
