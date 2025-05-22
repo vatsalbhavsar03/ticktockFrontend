@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import {
-    FaUniversity,
-    FaChalkboardTeacher,
-    FaUserGraduate,
     FaSignOutAlt,
     FaBars,
-    FaTachometerAlt,
 } from "react-icons/fa";
 import { VscWatch } from "react-icons/vsc";
 import '../admin/AdminLayout.css';
@@ -54,7 +50,7 @@ const AdminLayout = () => {
                         <AiFillDashboard style={{ fontSize: '30px' }} />
                         <span>Dashboard</span>
                     </li>
-                    <li onClick={() => navigate("/admin/faculties")}>
+                    <li onClick={() => navigate("/admin/ListCategory")}>
                         <BiSolidCategory style={{ fontSize: '30px' }} />
                         <span>Category</span>
                     </li>
@@ -66,12 +62,6 @@ const AdminLayout = () => {
                     <li onClick={() => navigate("/admin/ListProduct")}>
                         <TbDeviceWatchFilled style={{fontSize:"30px"}} />
                         <span>Products</span>
-                    </li>
-                    
-                    
-                    <li onClick={() => navigate("/admin/faculty-assignment")}>
-                        <FaChalkboardTeacher className="icon" />
-                        <span>Faculty Assignment</span>
                     </li>
                     <li onClick={handleLogout}>
                         <FaSignOutAlt className="icon" />

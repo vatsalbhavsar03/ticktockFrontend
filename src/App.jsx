@@ -10,6 +10,11 @@ import AdminLayout from './component/admin/AdminLayout';
 import ListProduct from './component/admin/ListProduct';
 import EditProduct from './component/admin/EditProduct';
 import ListBrand from './component/admin/ListBrand';
+import ListCategory from './component/admin/ListCategory';
+import AddCategory from './component/admin/AddCategory';
+import EditCategory from './component/admin/EditCategory';
+import EditBrand from './component/admin/EditBrand';
+
 
 function App() {
   return (
@@ -47,6 +52,11 @@ function App() {
           <Route path="ListProduct" element={<ListProduct />} />
           <Route path="EditProduct/:productId" element={<EditProduct />} />
           <Route path="ListBrand" element={<ListBrand />} />
+          <Route path="ListCategory" element={<ListCategory />} />
+          <Route path="addCategory" element={<AddCategory />} />
+          <Route path="editCategory/:id" element={<EditCategory />} />
+          <Route path="editBrand/:id" element={<EditBrand />} />
+          
         </Route>
       </Routes>
     </Router>

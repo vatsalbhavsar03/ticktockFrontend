@@ -15,7 +15,6 @@ const ListBrand = () => {
   const fetchBrands = () => {
     axios.get('https://localhost:7026/api/Brands/GetBrands')
       .then(response => {
-        console.log(response.data); // Check if categoryName is present
         if (response.data && response.data.brand) {
           setBrands(response.data.brand);
         } else {
@@ -30,7 +29,7 @@ const ListBrand = () => {
   };
 
   const handleEdit = (brandId) => {
-    navigate(`/admin/EditBrand/${brandId}`);
+    navigate(`/admin/editBrand/${brandId}`);
   };
 
   const handleDelete = (brandId) => {
@@ -92,20 +91,15 @@ const ListBrand = () => {
                 <tr key={brand.brandId} className="border-t">
                   <td className="px-4 py-2">{brand.brandId}</td>
                   <td className="px-4 py-2">{brand.brandName}</td>
-                  <td className="px-4 py-2">{brand.categoryName}</td> {/* Adjusted this */}
+                  <td className="px-4 py-2">{brand.categoryName}</td>
                   <td className="px-4 py-2 text-center">
                     <button
                       onClick={() => handleEdit(brand.brandId)}
                       className="text-blue-600 hover:underline mr-3"
-                    >
-                      Edit
-                    </button>
-                    <button
+                    >Edit</button><button
                       onClick={() => handleDelete(brand.brandId)}
                       className="text-red-600 hover:underline"
-                    >
-                      Delete
-                    </button>
+                    >Delete</button>
                   </td>
                 </tr>
               ))
@@ -117,6 +111,7 @@ const ListBrand = () => {
               </tr>
             )}
           </tbody>
+
         </table>
       </div>
     </div>
