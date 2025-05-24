@@ -1,8 +1,11 @@
+import { lazy } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './component/Login';
 import Signup from './component/Signup';
 import ProtectedRoute from './component/ProtectedRoute';
-import UserDashBoard from './component/user/UserDashboard';
+import UserDashBoard from './component/user/UserDashBoard';
 import AdminDashboard from './component/Admin/AdminDashboard';
 import AddProduct from './component/admin/AddProduct';
 import AddBrand from './component/admin/AddBrand';  // Import your AddBrand component
@@ -15,7 +18,9 @@ import AddCategory from './component/admin/AddCategory';
 import EditCategory from './component/admin/EditCategory';
 import EditBrand from './component/admin/EditBrand';
 import ListUser from './component/admin/ListUser';
-
+import Cart from "./component/user/Cart";
+import Product from "./component/user/Product";
+import Shop from "./component/user/Shop";
 
 function App() {
   return (
@@ -34,6 +39,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/user/cart" element={<Cart/>} />
+        <Route path="/user/product" element={<Product/>} />
+        <Route path="/user/shop" element={<Shop/>} />
 
         {/* Admin Routes with Layout */}
         <Route

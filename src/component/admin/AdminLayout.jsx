@@ -9,7 +9,9 @@ import '../admin/AdminLayout.css';
 import { BiSolidCategory } from "react-icons/bi";
 import { TbDeviceWatchFilled } from "react-icons/tb";
 import { AiFillDashboard } from "react-icons/ai";
-import { TbBrandBootstrap } from "react-icons/tb";
+import { TbBrandBumble } from "react-icons/tb";
+
+
 import { FaUser } from "react-icons/fa";
 
 
@@ -59,7 +61,7 @@ const AdminLayout = () => {
                         <span>Category</span>
                     </li>
                     <li onClick={() => navigate("/admin/ListBrand")}>
-                        <TbBrandBootstrap style={{ fontSize: '30px' }} />
+                        <TbBrandBumble style={{ fontSize: '30px' }} />
 
                         <span>Brand</span>
                     </li>
