@@ -66,7 +66,7 @@ function App() {
           <Route path="ListCategory" element={<ListCategory />} />
           <Route path="addCategory" element={<AddCategory />} />
           <Route path="editCategory/:id" element={<EditCategory />} />
-          <Route path="editBrand/:id" element={<EditBrand />} />
+          <Route path="editBrand/:brandId" element={<EditBrand />} />
           <Route path="ListUser" element={<ListUser />} />
           
         </Route>
