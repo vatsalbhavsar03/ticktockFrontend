@@ -23,6 +23,8 @@ import ListUser from './component/admin/ListUser';
 import Cart from "./component/user/Cart";
 import Product from "./component/user/Product";
 import Shop from "./component/user/Shop";
+import Whishlist from "./component/user/Whishlist";
+import UserProfile from "./component/UserProfile"
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
         <Route path="/user/cart" element={<Cart/>} />
         <Route path="/user/product" element={<Product/>} />
         <Route path="/user/shop" element={<Shop/>} />
+        <Route path="/user/whishlist" element={<Whishlist/>} />
+        <Route path="/user/userprofile" element={<UserProfile/>} />
 
         {/* Admin Routes with Layout */}
         <Route

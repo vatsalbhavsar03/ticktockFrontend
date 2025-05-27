@@ -2,8 +2,7 @@ import { Container, Row } from "react-bootstrap";
 import ProductCard from "./ProductCard/ProductCard"
 
 const Section = ({ title, bgColor, productItems }) => {
-    console.log(bgColor)
-  return (
+   return (
     <section style={{ backgroundColor : bgColor }}>
       <Container>
         <div className="heading">

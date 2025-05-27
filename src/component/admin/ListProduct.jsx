@@ -87,15 +87,15 @@ const ListProduct = () => {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200 text-gray-700">
             <tr>
-              <th className="px-4 py-4 text-left">Image</th>
-              <th className="px-4 py-4 text-left">Product ID</th>
-              <th className="px-4 py-4 text-left">Name</th>
-              <th className="px-4 py-4 text-left">Category</th>
-              <th className="px-4 py-4 text-left">Brand</th>
-              <th className="px-4 py-4 text-left">Price</th>
-              <th className="px-4 py-4 text-left">Stock</th>
-              <th className="px-4 py-4 text-left">Description</th>
-              <th className="px-4 py-4 text-center">Actions</th>
+              <th className="px-4 py-2 text-left">Image</th>
+              <th className="px-4 py-2 text-left">Product ID</th>
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Category</th>
+              <th className="px-4 py-2 text-left">Brand</th>
+              <th className="px-4 py-2 text-left">Price</th>
+              <th className="px-4 py-2 text-left">Stock</th>
+              <th className="px-4 py-2 text-left">Description</th>
+              <th className="px-4 py-2 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>

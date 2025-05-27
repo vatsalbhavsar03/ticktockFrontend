@@ -89,9 +89,9 @@ const ListCategory = () => {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200 text-gray-700">
             <tr>
-              <th className="px-4 py-4 text-left">Category ID</th>
-              <th className="px-4 py-4 text-left">Category Name</th>
-              <th className="px-4 py-4 text-center">Actions</th>
+              <th className="px-4 py-2 text-left">Category ID</th>
+              <th className="px-4 py-2 text-left">Category Name</th>
+              <th className="px-4 py-2 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>

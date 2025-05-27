@@ -71,7 +71,6 @@
   transform: rotate(-135deg) !important;
   opacity: 0.9 !important;
 }
-
 @media (max-width: 767px) {
   .navbar {
     font-size: 1.4rem !important;
@@ -196,4 +195,30 @@
     gap: 5px;
   }
   
+}
+
+
+.dropdown-menu-custom {
+    position: absolute;
+    top: 120%;
+    left: -180%;
+    right: 0;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    border-radius: 8px;
+    width: 150px;
+    padding: 0.5rem 0;
+}
+
+.dropdown-item-custom {
+  padding: 0.5rem 1rem;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.dropdown-item-custom:hover {
+  background-color: #f0f0f0;
 }
