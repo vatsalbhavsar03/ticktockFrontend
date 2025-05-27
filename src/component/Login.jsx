@@ -99,9 +99,8 @@ export default function Login() {
                   value={formData.Email}
                   onChange={handleChange}
                   placeholder="Enter Email"
-                  className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.Email ? "border-red-500" : "border-gray-300"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  className={`pl-10 pr-4 py-2 w-full border ${errors.Email ? "border-red-500" : "border-gray-300"
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 />
               </div>
               {errors.Email && <p className="text-sm text-red-600 mt-1">{errors.Email}</p>}
@@ -123,9 +122,8 @@ export default function Login() {
                   value={formData.Password}
                   onChange={handleChange}
                   placeholder="Enter Password"
-                  className={`pl-10 pr-10 py-2 w-full border ${
-                    errors.Password ? "border-red-500" : "border-gray-300"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  className={`pl-10 pr-10 py-2 w-full border ${errors.Password ? "border-red-500" : "border-gray-300"
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 />
                 <div
                   className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
@@ -137,13 +135,20 @@ export default function Login() {
               {errors.Password && <p className="text-sm text-red-600 mt-1">{errors.Password}</p>}
             </div>
 
+            <div className="mt-3 text-right">
+              <Link to="/forgotpassword" className="text-blue-600 hover:underline font-medium">
+                Forgot password?
+              </Link>
+            </div>
+
+
+
             {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className={`w-full flex items-center justify-center py-2 px-4 rounded-md text-white font-medium ${
-                loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`w-full flex items-center justify-center py-2 px-4 rounded-md text-white font-medium ${loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                } focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
               {loading ? (
                 <>

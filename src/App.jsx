@@ -25,6 +25,7 @@ import Product from "./component/user/Product";
 import Shop from "./component/user/Shop";
 import Whishlist from "./component/user/Whishlist";
 import UserProfile from "./component/UserProfile"
+import ForgotPassword from "./component/ForgotPassword";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+
 
         {/* User Dashboard Route */}
         <Route
