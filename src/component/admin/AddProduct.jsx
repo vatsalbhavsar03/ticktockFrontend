@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2';  // Import SweetAlert2
-import { useNavigate } from 'react-router-dom';  // Import React Router's useNavigate
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
-  const navigate = useNavigate();  // Use navigate for navigation
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
@@ -31,8 +31,9 @@ const AddProduct = () => {
     if (selectedCategoryId) {
       axios.get(`https://localhost:7026/api/Brands/GetBrandsByCategory/${selectedCategoryId}`)
         .then(res => {
-          if (Array.isArray(res.data)) {
-            setBrands(res.data);
+          console.log('Fetched brands response:', res.data);
+          if (res.data && Array.isArray(res.data.brands)) {
+            setBrands(res.data.brands);
           } else {
             setBrands([]);
           }
@@ -57,12 +58,11 @@ const AddProduct = () => {
     formData.append('stock', stock);
     formData.append('description', description);
     if (image) {
-      formData.append('imageUrl', image); // Matches backend field name
+      formData.append('imageUrl', image);
     }
 
     axios.post('https://localhost:7026/api/Products/AddProduct', formData)
       .then(() => {
-        // Show SweetAlert notification on success
         Swal.fire({
           icon: 'success',
           title: 'Product Added!',
@@ -70,13 +70,11 @@ const AddProduct = () => {
           confirmButtonText: 'Ok',
         }).then((result) => {
           if (result.isConfirmed) {
-            // Navigate to ListProduct Page upon confirmation
             navigate('/admin/ListProduct');
-  // Adjust the route as needed
           }
         });
 
-        // Reset form after success
+        // Reset form
         setProductName('');
         setSelectedCategoryId('');
         setSelectedBrandId('');
@@ -206,4 +204,3 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
-  

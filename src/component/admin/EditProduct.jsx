@@ -59,11 +59,13 @@ const EditProduct = () => {
     if (selectedCategoryId) {
       axios.get(`https://localhost:7026/api/Brands/GetBrandsByCategory/${selectedCategoryId}`)
         .then(res => {
-          if (Array.isArray(res.data)) {
-            setBrands(res.data);
-          } else {
-            setBrands([]);
-          }
+          const brandsArray = Array.isArray(res.data.brands)
+            ? res.data.brands
+            : Array.isArray(res.data)
+              ? res.data
+              : [];
+
+          setBrands(brandsArray);
         })
         .catch(err => {
           setBrands([]);
@@ -86,11 +88,9 @@ const EditProduct = () => {
     formData.append('stock', stock);
     formData.append('description', description);
     
-    // Append image if present
     if (image) {
       formData.append('imageUrl', image);
     } else {
-      // Keep the existing image if no new one is uploaded
       formData.append('imageUrl', existingImageUrl);
     }
 
