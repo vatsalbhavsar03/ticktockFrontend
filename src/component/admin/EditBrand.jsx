@@ -21,6 +21,7 @@ const EditBrand = () => {
       return;
     }
 
+
     // Fetch brand details
     fetch(`https://localhost:7026/api/Brands/FindBrand/${brandId}`)
       .then(res => res.json())
@@ -99,6 +100,7 @@ const EditBrand = () => {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
