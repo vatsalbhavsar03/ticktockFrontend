@@ -1,51 +1,54 @@
-import React from "react"
-import "./style.css"
-import { Col, Container, Row } from "react-bootstrap"
+import React from "react";
+import "./style.css";
+import { Col, Container, Row } from "react-bootstrap";
+import { VscWatch } from "react-icons/vsc";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer>
-        <Container>
-          <Row className="footer-row">
-            <Col md={3} sm={5} className='box'>
-              <div className="logo">
-                  <ion-icon name="bag"></ion-icon>
-                  <h1>Multimart</h1>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.</p>
-            </Col>
-            <Col md={3} sm={5} className='box'>
-              <h2>About Us</h2>
-              <ul>
-                <li >Careers</li>
-                <li>Our Stores</li>
-                <li>Our Cares</li>
-                <li>Terms & Conditions</li>
-                <li>Privacy Policy</li>
-              </ul>
-            </Col>
-            <Col md={3} sm={5} className='box'>
-              <h2>Customer Care</h2>
-              <ul>
-                <li>Help Center </li>
-                <li>How to Buy </li>
-                <li>Track Your Order </li>
-                <li>Corporate & Bulk Purchasing </li>
-                <li>Returns & Refunds </li>
-              </ul>
-            </Col>
-            <Col md={3} sm={5} className='box'>
-              <h2>Contact Us</h2>
-              <ul>
-                <li>70 Washington Square South, New York, NY 10012, United States </li>
-                <li>Email: uilib.help@gmail.com</li>
-                <li>Phone: +1 1123 456 780</li>
-              </ul>
-            </Col>
-          </Row>
-        </Container>
-    </footer>
-  )
-}
+    <footer className="footer"> 
+      <Container>
+        <Row className="footer-row border-bottom pb-3 mb-3">
+          <Col md={4} sm={5} className='box'>
+            <div className="logo">
+              <VscWatch />
+              <h1>Tick Tock Trends</h1>
+            </div>
+            <p>
+              The Online Watch Store Website is a modern e-commerce platform
+              designed to sell wristwatches from various brands and categories
+              to customers worldwide. The website offers a seamless and
+              user-friendly shopping experience.
+            </p>
+          </Col>
+          <Col md={4} sm={5} className='box'>
+            <h2>Quick Links</h2>
+            <ul>
+              <li><Link to="/user/userDashboard" className="footer-link">Home</Link></li>
+              <li><Link to="/user/shop" className="footer-link">Shop</Link></li>
+              <li><Link to="/user/whishlist" className="footer-link">Whishlist</Link></li>
+              <li><Link to="/user/cart" className="footer-link">Cart</Link></li>
+            </ul>
+          </Col>
+          <Col md={4} sm={5} className='box'>
+            <h2>Contact Us</h2>
+            <ul>
+              <li>Surat, Gujarat, India.</li>
+              <li>Email: ticktocktrends@gmail.com</li>
+              <li>Phone: +91 8978452359</li>
+            </ul>
+          </Col>
+        </Row>
 
-export default Footer
+        {/* Bottom copyright row */}
+        <Row className="text-center">
+          <Col>
+            <p className="footer-copy">© 2025 - Tick Tock Trends. All rights reserved.</p>
+          </Col>
+        </Row>
+      </Container>
+    </footer>
+  );
+};
+
+export default Footer;

@@ -19,48 +19,45 @@ import phone03 from "../Images/phone-03.png";
 import phone04 from "../Images/phone-04.jpg";
 import phone05 from "../Images/phone-05.jpg";
 import phone06 from "../Images/phone-06.jpg";
-import phone08 from "../Images/phone-08.png";
+
 
 import watch01 from "../Images/watch-01.jpg";
 import watch02 from "../Images/watch-02.jpg";
 import watch03 from "../Images/watch-03.jpg";
 import watch04 from "../Images/watch-04.jpg";
 
-import wireless01 from "../Images/wireless-01.png";
+
 import wireless02 from "../Images/wireless-02.png";
 import wireless03 from "../Images/wireless-03.png";
 import wireless04 from "../Images/wireless-04.png";
 
-import sofaSlide from "../Images/hero-img.png";
 import watchSlide from "../Images/watch-07.png";
+
+
+import eleganceWatch from "../images/elegans.png"
+import akean from "../images/akean.png"
+import clock from "../images/clock.webp"
 
 export const SliderData = [
   {
       id: 1,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: sofaSlide,
+      title: "Up to 50% Off For Your First Shopping",
+      desc: "The watch showcases a clean, silver dial with simple index markers and a small seconds sub-dial, all encased in a rose gold and ivory frame.",
+      cover: eleganceWatch,
   },
   {
       id: 2,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: phone08,
+      title: "Up to 50% Off For Your First Shopping",
+      desc: "The case is crafted from high-grade stainless steel, and the watch is powered by a robust automatic movement, visible through its transparent case back.",
+      cover: akean,
   },
   {
       id: 3,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: wireless01,
-  },
-  {
-      id: 4,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: watchSlide,
+      title: "Up to 50% Off For Your First Shopping",
+      desc: "Elevate your space with this elegant Titan wall clock, featuring a sleek black dial and premium marble-textured center.Perfect for contemporary homes or offices, it combines style, clarity, and timeless appeal",
+      cover: clock,
   },
 ];
-
 
 export const discoutProducts = [
   {

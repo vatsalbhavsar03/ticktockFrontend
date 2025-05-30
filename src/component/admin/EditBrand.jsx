@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AlertCircle } from 'lucide-react';
 
 const EditBrand = () => {
   const navigate = useNavigate();
@@ -10,17 +9,19 @@ const EditBrand = () => {
   const [brandName, setBrandName] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
-  const [validationError, setValidationError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch brand details and categories on mount
   useEffect(() => {
     if (!brandId) {
-      Swal.fire('Error', 'Brand ID is missing.', 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Brand Not Found',
+        text: 'Brand ID is missing.',
+      });
       navigate('/admin/ListBrand');
       return;
     }
-
 
     // Fetch brand details
     fetch(`https://localhost:7026/api/Brands/FindBrand/${brandId}`)
@@ -30,12 +31,20 @@ const EditBrand = () => {
           setBrandName(data.brand.brandName);
           setCategoryId(data.brand.categoryId);
         } else {
-          Swal.fire('Error', 'Brand not found', 'error');
+          Swal.fire({
+            icon: 'error',
+            title: 'Brand Not Found',
+            text: 'The brand you are trying to edit does not exist.',
+          });
           navigate('/admin/ListBrand');
         }
       })
       .catch(() => {
-        Swal.fire('Error', 'Failed to fetch brand', 'error');
+        Swal.fire({
+          icon: 'error',
+          title: 'Brand Not Found',
+          text: 'Failed to fetch brand details.',
+        });
         navigate('/admin/ListBrand');
       });
 
@@ -51,17 +60,19 @@ const EditBrand = () => {
       })
       .catch(error => {
         console.error('Error fetching categories:', error);
-        Swal.fire('Error', 'Failed to load categories.', 'error');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Failed to load categories.',
+        });
       });
   }, [brandId, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setValidationError('');
 
     // Basic validation
     if (!brandName.trim() || !categoryId) {
-      setValidationError('Both category and brand name are required.');
       return;
     }
 
@@ -85,40 +96,45 @@ const EditBrand = () => {
         Swal.fire({
           icon: 'success',
           title: 'Brand Updated!',
-          text: data.message || 'Brand updated successfully.',
+          text: 'Your brand has been successfully updated.',
           confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/admin/ListBrand');
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/admin/ListBrand');
+          }
         });
       } else {
-        setValidationError(data.message || 'Failed to update brand.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: data.message || 'Something went wrong! Please try again.',
+        });
       }
     } catch (error) {
       console.error('Error updating brand:', error);
-      setValidationError('Something went wrong! Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong! Please try again.',
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-8">Edit Brand</h1>
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Edit Brand</h1>
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <label className="block text-sm font-medium text-gray-700">Category</label>
           <select
             value={categoryId}
-            onChange={(e) => {
-              setCategoryId(e.target.value);
-              if (validationError) setValidationError('');
-            }}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              validationError && !categoryId ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'
-            }`}
+            onChange={(e) => setCategoryId(e.target.value)}
+            className="w-full mt-1 px-4 py-2 border rounded-md"
+            required
           >
-            <option value="">Select a category</option>
+            <option value="">Select Category</option>
             {categories.map(cat => (
               <option key={cat.categoryId} value={cat.categoryId}>
                 {cat.categoryName}
@@ -128,34 +144,21 @@ const EditBrand = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Brand Name</label>
+          <label className="block text-sm font-medium text-gray-700">Brand Name</label>
           <input
             type="text"
             value={brandName}
-            onChange={(e) => {
-              setBrandName(e.target.value);
-              if (validationError) setValidationError('');
-            }}
-            placeholder="Enter brand name"
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              validationError && !brandName.trim() ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'
-            }`}
+            onChange={(e) => setBrandName(e.target.value)}
+            className="w-full mt-1 px-4 py-2 border rounded-md"
+            required
           />
-          {validationError && (
-            <p className="mt-2 text-red-600 text-sm flex items-center">
-              <AlertCircle className="w-4 h-4 mr-1" />
-              {validationError}
-            </p>
-          )}
         </div>
 
         <div className="flex justify-end">
           <button
             type="submit"
             disabled={isLoading}
-            className={`px-6 py-2 rounded-md text-white ${
-              isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-            }`}
+            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Updating...' : 'Update Brand'}
           </button>

@@ -1,5 +1,5 @@
 footer {
-  background-color: #0f3460;
+  background-color: #0f3460 !important;
   padding: 80px 0;
   color: #fff;
 }
@@ -48,3 +48,15 @@ footer li {
   margin-bottom: 10px;
   opacity: 0.5;
 }
+
+.footer-link {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+  color: #ddd; /* optional lighter color on hover */
+}
+
+
