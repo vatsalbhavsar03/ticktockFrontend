@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { TrashIcon } from '@heroicons/react/24/solid';
 
 
 const ListUser = () => {
@@ -12,16 +13,16 @@ const ListUser = () => {
   }, []);
 
   const fetchUsers = () => {
-  axios.get('https://localhost:7026/api/Users/GetUsers')
-    .then(response => {
-      setUsers(response.data.users || []);
-    })
-    .catch(error => {
-      console.error('Error fetching users:', error);
-      setError('Error fetching users');
-      setUsers([]);
-    });
-};
+    axios.get('https://localhost:7026/api/Users/GetUsers')
+      .then(response => {
+        setUsers(response.data.users || []);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setError('Error fetching users');
+        setUsers([]);
+      });
+  };
 
 
   const handleDelete = (userId) => {
@@ -80,10 +81,13 @@ const ListUser = () => {
                   <td className="px-4 py-2 text-center">
                     <button
                       onClick={() => handleDelete(user.userId)}
-                      className="text-red-600 hover:underline"
+                      className="text-red-600 hover:text-red-800"
+                      title="Delete"
                     >
-                      Delete
+                      <TrashIcon className="h-5 w-5 inline" />
                     </button>
+
+
                   </td>
                 </tr>
               ))

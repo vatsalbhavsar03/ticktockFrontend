@@ -2,6 +2,8 @@ import { Container, Row } from "react-bootstrap";
 import ProductCard from "./ProductCard/ProductCard"
 
 const Section = ({ title, bgColor, productItems }) => {
+
+  console.log(productItems)
    return (
     <section style={{ backgroundColor : bgColor }}>
       <Container>
@@ -12,7 +14,7 @@ const Section = ({ title, bgColor, productItems }) => {
           {productItems.map((productItem) => {
             return (
               <ProductCard
-                key={productItem.id}
+                key={productItem.productId}
                 title={title}
                 productItem={productItem}
               />

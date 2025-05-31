@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 const ListBrand = () => {
   const [brands, setBrands] = useState([]);
@@ -32,35 +33,35 @@ const ListBrand = () => {
     navigate(`/admin/editBrand/${brandId}`);
   };
 
- const handleDelete = (brandId) => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'This will delete the brand permanently!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      axios.delete(`https://localhost:7026/api/Brands/DeleteBrand?Brandid=${brandId}`)
-        .then(() => {
-          Swal.fire({
-            title: 'Deleted!',
-            text: 'Brand has been deleted.',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false
+  const handleDelete = (brandId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will delete the brand permanently!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`https://localhost:7026/api/Brands/DeleteBrand?Brandid=${brandId}`)
+          .then(() => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Brand has been deleted.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            fetchBrands(); // Refresh the brand list
+          })
+          .catch(err => {
+            console.error('Error deleting brand:', err);
+            Swal.fire('Error', 'This Brand is used in a Product and cannot be deleted.', 'error');
           });
-          fetchBrands(); // Refresh the brand list
-        })
-        .catch(err => {
-          console.error('Error deleting brand:', err);
-          Swal.fire('Error', 'This Brand is used in a Product and cannot be deleted.', 'error');
-        });
-    }
-  });
-};
+      }
+    });
+  };
 
 
   return (
@@ -68,7 +69,10 @@ const ListBrand = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Brand Details</h1>
         <Link to="/admin/addBrand">
-          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+            </svg>
             Add Brand
           </button>
         </Link>
@@ -94,14 +98,25 @@ const ListBrand = () => {
                   <td className="px-4 py-2">{brand.brandName}</td>
                   <td className="px-4 py-2">{brand.categoryName}</td>
                   <td className="px-4 py-2 text-center">
-                    <button
-                      onClick={() => handleEdit(brand.brandId)}
-                      className="text-blue-600 hover:underline mr-3"
-                    >Edit</button><button
-                      onClick={() => handleDelete(brand.brandId)}
-                      className="text-red-600 hover:underline"
-                    >Delete</button>
+                    <div className="flex justify-center space-x-4">
+                      <button
+                        onClick={() => handleEdit(brand.brandId)}
+                        className="text-blue-600 hover:text-blue-800"
+                        title="Edit"
+                      >
+                        <PencilSquareIcon className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(brand.brandId)}
+                        className="text-red-600 hover:text-red-800"
+                        title="Delete"
+                      >
+                        <TrashIcon className="h-5 w-5" />
+                      </button>
+                    </div>
                   </td>
+
+
                 </tr>
               ))
             ) : (

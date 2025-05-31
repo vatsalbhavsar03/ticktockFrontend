@@ -46,3 +46,9 @@
     object-fit: contain;
 }
 
+.btnvisit {
+    background-color: #0f3460;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+}

@@ -5,7 +5,11 @@ import { toast } from "react-toastify";
 // import { useDispatch } from "react-redux";
 // import { addToCart } from "../../app/features/cart/cartSlice";
 
+
 const ProductCard = ({ title, productItem }) => {
+
+  console.log("productItem :::>", title, productItem)
+
   // const dispatch = useDispatch();
   // const router = useNavigate();
   // const handelClick = () => {
@@ -17,39 +21,36 @@ const ProductCard = ({ title, productItem }) => {
   // };
   return (
     <Col md={3} sm={5} xs={10} className="product mtop">
-      {title === "Big Discount" ? (
+      {/* {title === "Big Discount" ? (
         <span className="discount">{productItem.discount}% Off</span>
-      ) : null}
+      ) : null} */}
       <img
-        loading="lazy"
-        onClick={() => handelClick()}
-        src={productItem.imgUrl}
-        alt=""
+        onClick={() => handleClick()}
+        src={`https://localhost:7026${productItem.imageUrl}`}
+        alt={productItem.name}
       />
+
       <div className="product-like">
-       <i className="fa fa-heart-o"></i> 
+        <i className="fa fa-heart-o"></i>
       </div>
       <div className="product-details">
-        <h3 onClick={() => handelClick()}>{productItem.productName}</h3>
-        <div className="rate">
+        <h3 onClick={() => handelClick()}>{productItem.name}</h3>
+        {/* <div className="rate">
           <i className="fa fa-star"></i>
           <i className="fa fa-star"></i>
           <i className="fa fa-star"></i>
           <i className="fa fa-star"></i>
           <i className="fa fa-star"></i>
-        </div>
+        </div> */}
         <div className="price">
-          <h4>${productItem.price}</h4>
+          <h4>{productItem.price}</h4>
           <button
             aria-label="Add"
             type="submit"
             className="add"
             onClick={() => handelAdd(productItem)}
           >
-          
-           <i className="fa fa-plus"></i>
-
-
+            <i className="fa fa-plus"></i>
           </button>
         </div>
       </div>

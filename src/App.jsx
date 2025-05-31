@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './component/Login';
 import Signup from './component/Signup';
 import ProtectedRoute from './component/ProtectedRoute';
-import UserDashBoard from './component/user/UserDashBoard';
+import UserDashBoard from './component/user/UserDashboard';
 import AdminDashboard from './component/Admin/AdminDashboard';
 import AddProduct from './component/admin/AddProduct';
 import AddBrand from './component/admin/AddBrand';  // Import your AddBrand component

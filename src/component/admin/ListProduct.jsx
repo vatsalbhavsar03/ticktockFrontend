@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2'; // ✅ SweetAlert2 import
 import { Link, useNavigate } from 'react-router-dom';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
+
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -117,18 +119,17 @@ const ListProduct = () => {
                   <td className="px-4 py-2">{product.stock}</td>
                   <td className="px-4 py-2">{product.description}</td>
                   <td className="px-4 py-2 text-center">
-                    <button onClick={() => handleEdit(product.productId)} className="text-blue-600 hover:underline mr-3">
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(product.productId)}
-                      className="text-red-600 hover:underline"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex justify-center gap-4">
+                      <button onClick={() => handleEdit(product.productId)} className="text-blue-600 hover:text-blue-800">
+                        <PencilSquareIcon className="h-5 w-5" />
+                      </button>
+                      <button onClick={() => handleDelete(product.productId)} className="text-red-600 hover:text-red-800">
+                        <TrashIcon className="h-5 w-5" />
+                      </button>
+                    </div>
                   </td>
-
                 </tr>
+
               ))
             ) : (
               <tr>

@@ -1,9 +1,9 @@
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
+
 
 const ListCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -35,38 +35,38 @@ const ListCategory = () => {
   };
 
   const handleDelete = (categoryId) => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'This action will permanently delete the category!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      axios.delete(`https://localhost:7026/api/Categories/DeleteCategory?Categoryid=${categoryId}`)
-        .then((res) => {
-          Swal.fire({
-            title: 'Deleted!',
-            text: res.data.message || 'Category has been deleted.',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action will permanently delete the category!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`https://localhost:7026/api/Categories/DeleteCategory?Categoryid=${categoryId}`)
+          .then((res) => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: res.data.message || 'Category has been deleted.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            fetchCategories();
+          })
+          .catch(error => {
+            console.error('Error deleting category:', error);
+            Swal.fire({
+              title: 'Error!',
+              text: error.response?.data?.message || 'Failed to delete category.',
+              icon: 'error'
+            });
           });
-          fetchCategories(); // Refresh category list
-        })
-        .catch(error => {
-          console.error('Error deleting category:', error);
-          Swal.fire({
-            title: 'Error!',
-            text: error.response?.data?.message || 'Failed to delete category.',
-            icon: 'error'
-          });
-        });
-    }
-  });
-};
+      }
+    });
+  };
 
 
   return (
@@ -101,16 +101,24 @@ const ListCategory = () => {
                   <td className="px-4 py-2">{category.categoryId}</td>
                   <td className="px-4 py-2">{category.categoryName}</td>
                   <td className="px-4 py-2 text-center">
-                    <button onClick={() => handleEdit(category.categoryId)} className="text-blue-600 hover:underline mr-3">
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(category.categoryId)}
-                      className="text-red-600 hover:underline"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex justify-center space-x-4">
+                      <button
+                        onClick={() => handleEdit(category.categoryId)}
+                        className="text-blue-600 hover:text-blue-800"
+                        title="Edit"
+                      >
+                        <PencilSquareIcon className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(category.categoryId)}
+                        className="text-red-600 hover:text-red-800"
+                        title="Delete"
+                      >
+                        <TrashIcon className="h-5 w-5" />
+                      </button>
+                    </div>
                   </td>
+
                 </tr>
               ))
             ) : (
