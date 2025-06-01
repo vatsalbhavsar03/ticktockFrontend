@@ -8,8 +8,7 @@ import { toast } from "react-toastify";
 
 const ProductCard = ({ title, productItem }) => {
 
-  console.log("productItem :::>", title, productItem)
-
+  
   // const dispatch = useDispatch();
   // const router = useNavigate();
   // const handelClick = () => {

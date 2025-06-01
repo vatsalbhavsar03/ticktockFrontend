@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import {
     FaSignOutAlt,
-    FaBars,
+    FaBars, 
+    FaUserShield
 } from "react-icons/fa";
 import { VscWatch } from "react-icons/vsc";
 import '../admin/AdminLayout.css';
@@ -52,8 +53,8 @@ const AdminLayout = () => {
                         <AiFillDashboard style={{ fontSize: '30px' }} />
                         <span>Dashboard</span>
                     </li>
-                     <li onClick={() => navigate("/admin/ListUser")}>
-                        <FaUser  style={{ fontSize: '30px' }} />
+                    <li onClick={() => navigate("/admin/ListUser")}>
+                        <FaUser style={{ fontSize: '30px' }} />
                         <span>Users</span>
                     </li>
                     <li onClick={() => navigate("/admin/ListCategory")}>
@@ -66,8 +67,12 @@ const AdminLayout = () => {
                         <span>Brand</span>
                     </li>
                     <li onClick={() => navigate("/admin/ListProduct")}>
-                        <TbDeviceWatchFilled style={{fontSize:"30px"}} />
+                        <TbDeviceWatchFilled style={{ fontSize: "30px" }} />
                         <span>Products</span>
+                    </li>
+                    <li onClick={() => navigate("/admin/adminprofile")}>
+                        <FaUserShield style={{ fontSize: '30px' }} />
+                        <span>Admin Profile</span>
                     </li>
                     <li onClick={handleLogout}>
                         <FaSignOutAlt className="icon" />

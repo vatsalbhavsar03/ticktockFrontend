@@ -3,8 +3,7 @@ import ProductCard from "./ProductCard/ProductCard"
 
 const Section = ({ title, bgColor, productItems }) => {
 
-  console.log(productItems)
-   return (
+ return (
     <section style={{ backgroundColor : bgColor }}>
       <Container>
         <div className="heading">

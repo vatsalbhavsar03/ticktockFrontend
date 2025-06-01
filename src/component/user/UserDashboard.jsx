@@ -5,7 +5,6 @@ import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Section from "./Section";
 import SliderHome from "./Slider";
-// import { discoutProducts } from "../../utils/product"
 
 const UserDashBoard = () => {
     const [products, setProducts] = useState([]);
@@ -21,7 +20,6 @@ const UserDashBoard = () => {
             .then(data => {
                 if (data.success) {
                     setProducts(data.products);
-                    // console.log("data is :::>",data.products);
                 } else {
                     toast.error("Failed to load products");
                 }
@@ -31,8 +29,6 @@ const UserDashBoard = () => {
                 toast.error("An error occurred while fetching products");
             });
     }, []);
-
-
     return (
         <div>
             <Fragment>

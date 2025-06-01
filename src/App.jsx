@@ -26,6 +26,7 @@ import Shop from "./component/user/Shop";
 import Whishlist from "./component/user/Whishlist";
 import UserProfile from "./component/UserProfile"
 import ForgotPassword from "./component/ForgotPassword";
+import AdminProfile from "./component/admin/AdminProfile";
 
 function App() {
   return (
@@ -75,6 +76,7 @@ function App() {
           <Route path="editCategory/:id" element={<EditCategory />} />
           <Route path="editBrand/:brandId" element={<EditBrand />} />
           <Route path="ListUser" element={<ListUser />} />
+          <Route path="adminprofile" element={<AdminProfile />} />
           
         </Route>
       </Routes>
