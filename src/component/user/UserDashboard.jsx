@@ -35,7 +35,7 @@ const UserDashBoard = () => {
                 <NavBar />
                 <SliderHome/>
                 <Section
-                    title = "Big Discount"
+                    title = "Our Products"
                     bgColor ="ff0000"
                     productItems = {products}
                 />
