@@ -1,7 +1,157 @@
+// import { Col } from "react-bootstrap";
+// import "./product-card.css";
+// import { useNavigate } from "react-router-dom";
+// import { FaRupeeSign, FaHeart, FaRegHeart } from "react-icons/fa";  // Import both heart icons
+// import { toast } from "react-toastify";
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+
+// const ProductCard = ({ title, productItem }) => {
+//   const router = useNavigate();
+//   const [isWishlisted, setIsWishlisted] = useState(false);
+
+//   const userId = localStorage.getItem("UserId");
+
+//   useEffect(() => {
+//     const fetchWishlist = async () => {
+//       try {
+//         const res = await axios.get(`https://localhost:7026/api/Wishlist/GetWishlist/${userId}`);
+//         if (res.data.success) {
+//           const wishlistedProductIds = res.data.data.map(item => item.product.productId);
+//           setIsWishlisted(wishlistedProductIds.includes(productItem.productId));
+//         }
+//       } catch (error) {
+//         console.error("Error loading wishlist", error);
+//       }
+//     };
+
+//     if (userId) fetchWishlist();
+//   }, [productItem.productId, userId]);
+
+//   const addToCart = (product) => {
+//   const userId = parseInt(localStorage.getItem("UserId"));
+//   const payload = {
+//     userId: userId,
+//     productId: product.productId,
+//     quantity: 1,
+//   };
+
+//   axios
+//     .post("https://localhost:7026/api/Cart/AddToCart", payload)
+//     .then((res) => {
+//       if (res.data.success) {
+//         toast.success("Item added to cart");
+//       } else {
+//         toast.warning(res.data.message);
+//       }
+//     })
+//     .catch(() => toast.error("Failed to add to cart"));
+// };
+
+// const removeFromCart = (cartItemId) => {
+//   axios
+//     .delete(`https://localhost:7026/api/Cart/${cartItemId}/DeleteCart`)
+//     .then((res) => {
+//       if (res.data.success) {
+//         toast.success("Removed from cart");
+//         // Refresh cart list
+//       } else {
+//         toast.warning(res.data.message);
+//       }
+//     })
+//     .catch(() => toast.error("Error removing item"));
+// };
+
+// const updateCartItem = (cartItemId, newQuantity) => {
+//   axios
+//     .put(`https://localhost:7026/api/Cart/${cartItemId}/UpdateCart`, {
+//       quantity: newQuantity,
+//     })
+//     .then((res) => {
+//       if (res.data.success) {
+//         toast.success("Quantity updated");
+//         // Refresh cart list
+//       } else {
+//         toast.warning(res.data.message);
+//       }
+//     })
+//     .catch(() => toast.error("Failed to update quantity"));
+// };
+
+
+//   const toggleWishlist = async () => {
+//     const dto = {
+//       userId: parseInt(userId),
+//       productId: productItem.productId,
+//     };
+
+//     try {
+//       if (!isWishlisted) {
+//         const res = await axios.post("https://localhost:7026/api/Wishlist/AddToWishlist", dto);
+//         if (res.data.success) {
+//           toast.success("Added to wishlist");
+//           setIsWishlisted(true);
+//         } else if (res.data.message === "Product already in wishlist") {
+//           toast.warning(res.data.message);
+//           setIsWishlisted(true);
+//         }
+//       } else {
+//         const res = await axios.delete("https://localhost:7026/api/Wishlist/RemoveFromWishlist", { data: dto });
+//         if (res.data.success) {
+//           toast.success("Removed from wishlist");
+//           setIsWishlisted(false);
+//         }
+//       }
+//     } catch (err) {
+//       console.error("Wishlist toggle error", err);
+//     }
+//   };
+
+//   const handleClick = () => {
+//     router(`/user/productdetail/${productItem.productId}`);
+//   };
+
+//   return (
+//     <Col md={3} sm={5} xs={10} className="product mtop">
+//       <img
+//         onClick={handleClick}
+//         src={`https://localhost:7026${productItem.imageUrl}`}
+//         alt={productItem.name}
+//         style={{ cursor: "pointer" }}
+//       />
+
+//       {/* Heart icon with outline/fill */}
+//       <div className="product-like" onClick={toggleWishlist} style={{ cursor: "pointer" }}>
+//         {isWishlisted ? (
+//           <FaHeart color="red" size={24} />
+//         ) : (
+//           <FaRegHeart color="black" size={24} />
+//         )}
+//       </div>
+
+//       <div className="product-details">
+//         <h3 onClick={handleClick} style={{ cursor: "pointer" }}>{productItem.name}</h3>
+//         <div className="price">
+//           <h4 className="d-flex align-items-center"><FaRupeeSign />{productItem.price}</h4>
+//           <button
+//             aria-label="Add"
+//             type="submit"
+//             className="add"
+//             onClick={() => handelAdd(productItem)}
+//           >
+//             <i className="fa fa-plus"></i>
+//           </button>
+//         </div>
+//       </div>
+//     </Col>
+//   );
+// };
+
+// export default ProductCard;
 import { Col } from "react-bootstrap";
 import "./product-card.css";
 import { useNavigate } from "react-router-dom";
-import { FaRupeeSign, FaHeart, FaRegHeart } from "react-icons/fa";  // Import both heart icons
+import { FaRupeeSign, FaHeart, FaRegHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -28,6 +178,26 @@ const ProductCard = ({ title, productItem }) => {
     if (userId) fetchWishlist();
   }, [productItem.productId, userId]);
 
+  const addToCart = (product) => {
+    const userId = parseInt(localStorage.getItem("UserId"));
+    const payload = {
+      userId: userId,
+      productId: product.productId,
+      quantity: 1,
+    };
+
+    axios
+      .post("https://localhost:7026/api/Cart/AddToCart", payload)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Item added to cart");
+        } else {
+          toast.warning(res.data.message);
+        }
+      })
+      .catch(() => toast.error("Failed to add to cart"));
+  };
+
   const toggleWishlist = async () => {
     const dto = {
       userId: parseInt(userId),
@@ -52,6 +222,7 @@ const ProductCard = ({ title, productItem }) => {
         }
       }
     } catch (err) {
+      toast.error("Something went wrong with wishlist");
       console.error("Wishlist toggle error", err);
     }
   };
@@ -66,10 +237,10 @@ const ProductCard = ({ title, productItem }) => {
         onClick={handleClick}
         src={`https://localhost:7026${productItem.imageUrl}`}
         alt={productItem.name}
+        onError={(e) => { e.target.src = '/fallback-image.png'; }} // optional fallback
         style={{ cursor: "pointer" }}
       />
 
-      {/* Heart icon with outline/fill */}
       <div className="product-like" onClick={toggleWishlist} style={{ cursor: "pointer" }}>
         {isWishlisted ? (
           <FaHeart color="red" size={24} />
@@ -86,7 +257,7 @@ const ProductCard = ({ title, productItem }) => {
             aria-label="Add"
             type="submit"
             className="add"
-            onClick={() => handelAdd(productItem)}
+            onClick={() => addToCart(productItem)} // ✅ fixed reference
           >
             <i className="fa fa-plus"></i>
           </button>
