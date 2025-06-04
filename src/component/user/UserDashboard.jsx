@@ -1,16 +1,39 @@
 import { Fragment, useEffect, useState } from "react";
 import NavBar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Section from "./Section";
 import SliderHome from "./Slider";
+import { jwtDecode } from "jwt-decode";
 
 const UserDashBoard = () => {
-    
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+        // console.log("Token:", token);
+
+        if (!token) return;
+
+        try {
+            const decoded = jwtDecode(token);
+            // console.log("Decoded token:", decoded); // Inspect what it contains
+
+            // Try these one by one depending on your token's payload
+            const Userid = decoded.UserId || decoded.userId || decoded.sub;
+
+            if (Userid) {
+                localStorage.setItem("UserId", Userid);
+            } else {
+                console.warn("UserId not found in token");
+            }
+
+        } catch (error) {
+            console.error("Invalid token:", error);
+            toast.error("Invalid or expired token");
+        }
+
         fetch("https://localhost:7026/api/Products/GetProducts")
             .then(response => {
                 if (!response.ok) {
@@ -30,17 +53,15 @@ const UserDashBoard = () => {
                 toast.error("An error occurred while fetching products");
             });
     }, []);
-
-
     return (
         <div>
             <Fragment>
                 <NavBar />
-                <SliderHome/>
+                <SliderHome />
                 <Section
-                    title = "Our Products"
-                    bgColor ="ff0000"
-                    productItems = {products}
+                    title="Our Products"
+                    bgColor="ff0000"
+                    productItems={products}
                 />
                 <Footer />
             </Fragment>

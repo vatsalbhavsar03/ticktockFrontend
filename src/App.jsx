@@ -29,8 +29,12 @@ import ForgotPassword from "./component/ForgotPassword";
 import AdminProfile from "./component/admin/AdminProfile";
 import ProductDetails from "./component/user/ProductDetails/ProductDetails";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
+    <>
     <Router>
       <Routes>
         {/* Public Routes */}
@@ -84,6 +88,8 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 }
 

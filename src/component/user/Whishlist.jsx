@@ -25,7 +25,6 @@ const Wishlist = () => {
         setLoading(false);
       })
       .catch((err) => {
-        toast.error("Failed to load wishlist");
         console.error(err);
         setLoading(false);
       });
