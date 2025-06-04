@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import ProductCard from "./ProductCard/ProductCard";
 
-const Section = ({ title, bgColor, productItems, wishlistIds, setWishlistIds, userId }) => {
+const Section = ({ title, bgColor, productItems }) => {
   return (
     <section style={{ backgroundColor: bgColor }}>
       <Container>
@@ -14,9 +14,9 @@ const Section = ({ title, bgColor, productItems, wishlistIds, setWishlistIds, us
               key={productItem.productId}
               title={title}
               productItem={productItem}
-              isWishlisted={wishlistIds.includes(productItem.productId)}
-              setWishlistIds={setWishlistIds}
-              userId={userId}
+              // isWishlisted={wishlistIds.includes(productItem.productId)}
+              // setWishlistIds={setWishlistIds}
+              // userId={userId}
             />
           ))}
         </Row>

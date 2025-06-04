@@ -31,7 +31,7 @@ const AddProduct = () => {
     if (selectedCategoryId) {
       axios.get(`https://localhost:7026/api/Brands/GetBrandsByCategory/${selectedCategoryId}`)
         .then(res => {
-          console.log('Fetched brands response:', res.data);
+          // console.log('Fetched brands response:', res.data);
           if (res.data && Array.isArray(res.data.brands)) {
             setBrands(res.data.brands);
           } else {

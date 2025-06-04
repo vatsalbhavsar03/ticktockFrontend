@@ -7,6 +7,7 @@ import Section from "./Section";
 import SliderHome from "./Slider";
 
 const UserDashBoard = () => {
+    
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -29,6 +30,8 @@ const UserDashBoard = () => {
                 toast.error("An error occurred while fetching products");
             });
     }, []);
+
+
     return (
         <div>
             <Fragment>

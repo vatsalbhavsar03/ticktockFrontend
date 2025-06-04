@@ -19,7 +19,7 @@ const Shop = () => {
             })
             .then(data => {
                 if (data.success) {
-                    console.log(data.products)
+                    // console.log(data.products)
                     setProducts(data.products);
                 } else {
                     toast.error("Failed to load products");

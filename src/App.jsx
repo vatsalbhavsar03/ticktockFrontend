@@ -27,6 +27,7 @@ import Whishlist from "./component/user/Whishlist";
 import UserProfile from "./component/UserProfile"
 import ForgotPassword from "./component/ForgotPassword";
 import AdminProfile from "./component/admin/AdminProfile";
+import ProductDetails from "./component/user/ProductDetails/ProductDetails";
 
 function App() {
   return (
@@ -52,6 +53,8 @@ function App() {
         <Route path="/user/shop" element={<Shop/>} />
         <Route path="/user/whishlist" element={<Whishlist/>} />
         <Route path="/user/userprofile" element={<UserProfile/>} />
+        <Route path="/user/productdetail/:productId" element={<ProductDetails/>} />
+
 
         {/* Admin Routes with Layout */}
         <Route

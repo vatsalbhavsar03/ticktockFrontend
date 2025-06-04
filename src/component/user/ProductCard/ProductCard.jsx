@@ -1,6 +1,7 @@
 import { Col } from "react-bootstrap";
 import "./product-card.css";
 import { useNavigate } from "react-router-dom";
+import { FaRupeeSign } from "react-icons/fa";
 import { toast } from "react-toastify";
 // import { useDispatch } from "react-redux";
 // import { addToCart } from "../../app/features/cart/cartSlice";
@@ -10,10 +11,13 @@ const ProductCard = ({ title, productItem }) => {
 
   
   // const dispatch = useDispatch();
-  // const router = useNavigate();
-  // const handelClick = () => {
-  //   router(`/shop/${productItem.id}`);
-  // };
+  const router = useNavigate();
+
+  const handelClick = () => {
+    // router(`/shop/${productItem.id}`);
+    router(`/user/productdetail/${productItem.productId}`);
+    
+  };
   // const handelAdd = () => {
   //   dispatch(addToCart({ product: productItem, num: 1 }));
   //   toast.success("Product has been added to cart!");
@@ -24,7 +28,7 @@ const ProductCard = ({ title, productItem }) => {
         <span className="discount">{productItem.discount}% Off</span>
       ) : null} */}
       <img
-        onClick={() => handleClick()}
+        onClick={() => handelClick()}
         src={`https://localhost:7026${productItem.imageUrl}`}
         alt={productItem.name}
       />
@@ -42,7 +46,7 @@ const ProductCard = ({ title, productItem }) => {
           <i className="fa fa-star"></i>
         </div> */}
         <div className="price">
-          <h4>{productItem.price}</h4>
+          <h4 className="d-flex align-items-center"><FaRupeeSign />{productItem.price}</h4>
           <button
             aria-label="Add"
             type="submit"
