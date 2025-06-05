@@ -28,13 +28,11 @@ import UserProfile from "./component/UserProfile"
 import ForgotPassword from "./component/ForgotPassword";
 import AdminProfile from "./component/admin/AdminProfile";
 import ProductDetails from "./component/user/ProductDetails/ProductDetails";
+import Order from "./component/admin/Order";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <>
     <Router>
       <Routes>
         {/* Public Routes */}
@@ -52,12 +50,12 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/user/cart" element={<Cart/>} />
-        <Route path="/user/product" element={<Product/>} />
-        <Route path="/user/shop" element={<Shop/>} />
-        <Route path="/user/whishlist" element={<Whishlist/>} />
-        <Route path="/user/userprofile" element={<UserProfile/>} />
-        <Route path="/user/productdetail/:productId" element={<ProductDetails/>} />
+        <Route path="/user/cart" element={<Cart />} />
+        <Route path="/user/product" element={<Product />} />
+        <Route path="/user/shop" element={<Shop />} />
+        <Route path="/user/whishlist" element={<Whishlist />} />
+        <Route path="/user/userprofile" element={<UserProfile />} />
+        <Route path="/user/productdetail/:productId" element={<ProductDetails />} />
 
 
         {/* Admin Routes with Layout */}
@@ -84,12 +82,11 @@ function App() {
           <Route path="editBrand/:brandId" element={<EditBrand />} />
           <Route path="ListUser" element={<ListUser />} />
           <Route path="adminprofile" element={<AdminProfile />} />
-          
+          <Route path="order" element={<Order />} />
         </Route>
       </Routes>
     </Router>
-    <ToastContainer position="top-right" autoClose={1000} />
-    </>
+
   );
 }
 

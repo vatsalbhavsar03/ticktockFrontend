@@ -11,9 +11,9 @@ import { BiSolidCategory } from "react-icons/bi";
 import { TbDeviceWatchFilled } from "react-icons/tb";
 import { AiFillDashboard } from "react-icons/ai";
 import { TbBrandBumble } from "react-icons/tb";
-
-
 import { FaUser } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+
 
 
 
@@ -69,6 +69,10 @@ const AdminLayout = () => {
                     <li onClick={() => navigate("/admin/ListProduct")}>
                         <TbDeviceWatchFilled style={{ fontSize: "30px" }} />
                         <span>Products</span>
+                    </li>
+                     <li onClick={() => navigate("/admin/order")}>
+                        <FaShoppingCart  style={{ fontSize: '30px' }} />
+                        <span>Orders</span>
                     </li>
                     <li onClick={() => navigate("/admin/adminprofile")}>
                         <FaUserShield style={{ fontSize: '30px' }} />
