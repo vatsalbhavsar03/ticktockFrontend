@@ -253,13 +253,8 @@ const ProductCard = ({ title, productItem }) => {
         <h3 onClick={handleClick} style={{ cursor: "pointer" }}>{productItem.name}</h3>
         <div className="price">
           <h4 className="d-flex align-items-center"><FaRupeeSign />{productItem.price}</h4>
-          <button
-            aria-label="Add"
-            type="submit"
-            className="add"
-            onClick={() => addToCart(productItem)} // ✅ fixed reference
-          >
-            <i className="fa fa-plus"></i>
+          <button className="addtoCart" onClick={() => addToCart(productItem)}>
+            Add to Cart
           </button>
         </div>
       </div>

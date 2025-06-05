@@ -23,7 +23,7 @@ import ListUser from './component/admin/ListUser';
 import Cart from "./component/user/Cart";
 import Product from "./component/user/Product";
 import Shop from "./component/user/Shop";
-import Whishlist from "./component/user/Whishlist";
+import Whishlist from "./component/user/Whishlist/Whishlist";
 import UserProfile from "./component/UserProfile"
 import ForgotPassword from "./component/ForgotPassword";
 import AdminProfile from "./component/admin/AdminProfile";
