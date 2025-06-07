@@ -49,6 +49,7 @@ const Wishlist = () => {
       })
       .then((res) => {
         if (res.data.success) {
+           alert("Removed from wishlist")
           toast.success("Removed from wishlist");
 
           // Optimistically update state
@@ -76,8 +77,10 @@ const Wishlist = () => {
       .post("https://localhost:7026/api/Cart/AddToCart", cartItem)
       .then((res) => {
         if (res.data.success) {
+           alert("Item added to cart")
           toast.success("Added to cart");
         } else {
+           alert("Already in cart")
           toast.warning(res.data.message || "Already in cart");
         }
       })
