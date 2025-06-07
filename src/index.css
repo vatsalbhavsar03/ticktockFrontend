@@ -208,7 +208,7 @@ button {
 }
 
 @media (max-width: 767px) {
-  .cart-items .container > .row {
+  .cart-items .container>.row {
     flex-wrap: wrap-reverse !important;
   }
 }
@@ -263,10 +263,16 @@ button {
   background: none;
   border: 1px solid rgb(3 0 71 / 9%);
   color: #0f3460;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .desCart {
   background: #f6f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cart-total h4 {
