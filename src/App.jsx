@@ -29,6 +29,7 @@ import ForgotPassword from "./component/ForgotPassword";
 import AdminProfile from "./component/admin/AdminProfile";
 import ProductDetails from "./component/user/ProductDetails/ProductDetails";
 import Order from "./component/admin/Order";
+import Checkout from "./component/user/Checkout/Checkout";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/user/userprofile" element={<UserProfile />} />
         <Route path="/user/productdetail/:productId" element={<ProductDetails />} />
 
+        <Route path="/user/checkout" element={<Checkout/>} />
 
         {/* Admin Routes with Layout */}
         <Route
