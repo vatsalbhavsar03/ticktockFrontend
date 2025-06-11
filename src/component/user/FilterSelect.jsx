@@ -1,13 +1,5 @@
-import Select from 'react-select';
-
-
-const options = [
-    { value: "sofa", label: "Sofa" },
-    { value: "chair", label: "Chair" },
-    { value: "watch", label: "Watch" },
-    { value: "mobile", label: "Mobile" },
-    { value: "wireless", label: "Wireless" },
-];
+import { useEffect, useState } from "react";
+import Select from "react-select";
 
 const customStyles = {
     control: (provided) => ({
@@ -35,17 +27,36 @@ const customStyles = {
     }),
 };
 
-const FilterSelect = () => {
-    // const handleChange = (selectedOption) => {
-    //     setFilterList(products.filter(item => item.category === selectedOption.value))
-    // }
+const FilterSelect = ({ onCategoryChange, onBrandChange }) => {
+    const [categoryOptions, setCategoryOptions] = useState([]);
+    const [brandOptions, setBrandOptions] = useState([]);
+
+    useEffect(() => {
+        fetch("https://localhost:7026/api/Products/GetFilterOptions")
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setCategoryOptions([{ value: "", label: "All Categories" }, ...data.categories]);
+                    setBrandOptions([{ value: "", label: "All Brands" }, ...data.brands]);
+                }
+            });
+    }, []);
+
     return (
-        <Select
-            options={options}
-            defaultValue={{ value: "", label: "Filter By Category" }}
-            styles={customStyles}
-            // onChange={handleChange}
-        />
+        <div style={{ display: "flex", gap: "10px" }}>
+            <Select
+                options={categoryOptions}
+                defaultValue={{ value: "", label: "All Categories" }}
+                styles={customStyles}
+                onChange={(selected) => onCategoryChange(selected.value)}
+            />
+            <Select
+                options={brandOptions}
+                defaultValue={{ value: "", label: "All Brands" }}
+                styles={customStyles}
+                onChange={(selected) => onBrandChange(selected.value)}
+            />
+        </div>
     );
 };
 
