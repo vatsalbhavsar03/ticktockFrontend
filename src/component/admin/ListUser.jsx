@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { TrashIcon } from '@heroicons/react/24/solid';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 
 const ListUser = () => {
@@ -22,6 +24,30 @@ const ListUser = () => {
         setError('Error fetching users');
         setUsers([]);
       });
+  };
+
+  const exportToExcel = () => {
+    if (users.length === 0) {
+      Swal.fire("No data", "There are no users to export.", "info");
+      return;
+    }
+
+    const formattedData = users.map(user => ({
+      "User ID": user.userId,
+      Name: user.name,
+      Email: user.email,
+      "Phone No": user.phoneNo,
+      "Created At": user.createdAt,
+      "Updated At": user.updatedAt,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(blob, "Registered_Users.xlsx");
   };
 
 
@@ -54,6 +80,15 @@ const ListUser = () => {
       <h1 className="text-3xl font-bold mb-6">Registered Users</h1>
 
       {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">{error}</div>}
+
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={exportToExcel}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center"
+        >
+          Export to Excel
+        </button>
+      </div>
 
       <div className="bg-white shadow rounded-lg overflow-x-auto">
         <table className="min-w-full table-auto">

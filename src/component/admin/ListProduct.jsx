@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2'; // ✅ SweetAlert2 import
+import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -30,10 +31,29 @@ const ListProduct = () => {
       });
   };
 
+  const exportToExcel = () => {
+    const exportData = products.map(product => ({
+      ProductID: product.productId,
+      Name: product.name,
+      Category: product.categoryName,
+      Brand: product.brandName,
+      Price: product.price,
+      Stock: product.stock,
+      Description: product.description,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(blob, "Products_List.xlsx");
+  };
+
   const handleEdit = (productId) => {
     navigate(`/admin/EditProduct/${productId}`);
   };
-
 
   const handleDelete = (productId) => {
     Swal.fire({
@@ -73,14 +93,22 @@ const ListProduct = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Products Details</h1>
-        <Link to="/admin/AddProduct">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
-            </svg>
-            Add Product
+        <div className="flex gap-3">
+          <Link to="/admin/AddProduct">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+              </svg>
+              Add Product
+            </button>
+          </Link>
+          <button
+            onClick={exportToExcel}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center"
+          >
+            Export to Excel
           </button>
-        </Link>
+        </div>
       </div>
 
       {error && <div className="bg-red-100 p-4 text-red-700 rounded-lg mb-4">{error}</div>}
@@ -129,7 +157,6 @@ const ListProduct = () => {
                     </div>
                   </td>
                 </tr>
-
               ))
             ) : (
               <tr>
