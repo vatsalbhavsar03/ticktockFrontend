@@ -74,13 +74,13 @@ const Checkout = () => {
     const placeOrderAndPayment = async (transactionId, paymentStatus) => {
         try {
             const orderRes = await axios.post(`${API_BASE_URL}/Order/CreateOrder`, {
-                userId: user.userid,             // ✅ Extract this from profile response earlier
+                userId: user.userid,
                 phone: user.mobile,
-                address: address,            // ✅ User-entered address
+                address: address, 
             }
             );
-
-            const orderId = orderRes.data.orderId;
+        
+        const orderId = orderRes.data.orderId;
 
             await axios.post(`${API_BASE_URL}/Payment/CreatePayment`, {
                 orderId: orderId,
@@ -89,7 +89,6 @@ const Checkout = () => {
                 amount: total,
                 paymentStatus: paymentStatus,
             });
-
             alert("✅ Order placed successfully!");
             navigate("/thank-you");
         } catch (error) {
@@ -138,7 +137,7 @@ const Checkout = () => {
             rzp.open();
         }
     };
-
+    
     return (
         <>
             <NavBar />
@@ -271,7 +270,6 @@ const Checkout = () => {
                                         />
                                     </div>
                                 </Form.Group>
-
                                 <Button
                                     style={{ backgroundColor: "#0f3460", borderColor: "#0f3460" }}
                                     className="w-100"

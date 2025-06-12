@@ -5,7 +5,7 @@ import NavBar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import FilterSelect from "./FilterSelect";
 import SearchBar from "./SeachBar/SearchBar";
-import Section from "./Section.jsx";
+import ProductCard from "./ProductCard/ProductCard";
 import { toast } from "react-toastify";
 
 const Shop = () => {
@@ -46,14 +46,26 @@ const Shop = () => {
       <Container className="py-4">
         <Row>
           <Col>
-            <div className="p-3 ">
+            <div className="p-3">
               <h5 className="pb-3">Filters</h5>
-              <FilterSelect />
+              <FilterSelect  className="bg-white"/>
             </div>
           </Col>
           <Col md={9}>
             <SearchBar onSearch={fetchProducts} />
-            <Section productItems={products}  />
+            <section>
+              <Container>
+                <Row className="justify-content-start mt-4">
+                  {products.map((productItem) => (
+                    <ProductCard
+                      key={productItem.productId}
+                      title="Products"
+                      productItem={productItem}
+                    />
+                  ))}
+                </Row>
+              </Container>
+            </section>
           </Col>
         </Row>
       </Container>

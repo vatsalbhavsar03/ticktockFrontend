@@ -44,7 +44,7 @@ const FilterSelect = ({ onCategoryChange, onBrandChange }) => {
 
     return (
         <div>
-            <Select
+            <Select className="mb-3"
                 options={categoryOptions}
                 defaultValue={{ value: "", label: "All Categories" }}
                 styles={customStyles}
