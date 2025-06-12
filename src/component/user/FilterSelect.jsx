@@ -43,7 +43,7 @@ const FilterSelect = ({ onCategoryChange, onBrandChange }) => {
     }, []);
 
     return (
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div>
             <Select
                 options={categoryOptions}
                 defaultValue={{ value: "", label: "All Categories" }}

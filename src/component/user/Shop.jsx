@@ -40,28 +40,25 @@ const Shop = () => {
   }, []);
 
   return (
-    <div>
-      <Fragment>
-        <NavBar />
-        <Banner title="products" />
-        <section className="filter-bar">
-          <Container className="filter-bar-contianer">
-            <Row className="justify-content-center">
-              <Col md={4}>
-                <FilterSelect />
-              </Col>
-              <Col md={8}>
-                <SearchBar onSearch={fetchProducts} />
-              </Col>
-            </Row>
-          </Container>
-          <Container>
-            <Section bgColor="ff0000" productItems={products} />
-          </Container>
-        </section>
-        <Footer />
-      </Fragment>
-    </div>
+    <Fragment>
+      <NavBar />
+      <Banner title="products" />
+      <Container className="py-4">
+        <Row>
+          <Col>
+            <div className="p-3 ">
+              <h5 className="pb-3">Filters</h5>
+              <FilterSelect />
+            </div>
+          </Col>
+          <Col md={9}>
+            <SearchBar onSearch={fetchProducts} />
+            <Section productItems={products}  />
+          </Col>
+        </Row>
+      </Container>
+      <Footer />
+    </Fragment>
   );
 };
 

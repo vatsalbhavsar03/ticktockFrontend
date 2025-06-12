@@ -14,9 +14,6 @@ const Section = ({ title, bgColor, productItems }) => {
               key={productItem.productId}
               title={title}
               productItem={productItem}
-              // isWishlisted={wishlistIds.includes(productItem.productId)}
-              // setWishlistIds={setWishlistIds}
-              // userId={userId}
             />
           ))}
         </Row>
