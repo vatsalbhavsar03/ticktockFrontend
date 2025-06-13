@@ -1,0 +1,37 @@
+/* toastFix.css */
+
+/* 🛡️ Prevent Toastify styles from affecting your UI */
+.Toastify__toast {
+  font-family: inherit !important;
+  font-size: 0.95rem !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
+}
+
+/* Keep inner body neat */
+.Toastify__toast-body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ✅ Match Bootstrap colors */
+.Toastify__toast--success {
+  background-color: #198754 !important; /* Bootstrap green */
+  color: #fff !important;
+}
+
+.Toastify__toast--error {
+  background-color: #dc3545 !important; /* Bootstrap red */
+  color: #fff !important;
+}
+
+.Toastify__toast--info {
+  background-color: #0dcaf0 !important; /* Bootstrap info */
+  color: #000 !important;
+}
+
+.Toastify__toast--warning {
+  background-color: #ffc107 !important; /* Bootstrap warning */
+  color: #000 !important;
+}
