@@ -15,7 +15,7 @@ const customStyles = {
         ...provided,
         backgroundColor: state.isSelected ? "#0f3460" : "white",
         color: state.isSelected ? "white" : "#0f3460",
-        "&:hover": {
+        "&:hover": {    
             backgroundColor: "#0f3460",
             color: "white",
         },

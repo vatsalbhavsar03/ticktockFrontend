@@ -6,15 +6,29 @@ import Footer from "./Footer/Footer";
 import FilterSelect from "./FilterSelect";
 import SearchBar from "./SeachBar/SearchBar";
 import ProductCard from "./ProductCard/ProductCard";
+import SortSelect from "./SeachBar/SortSelect";
 import { toast } from "react-toastify";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+  const [search, setSearch] = useState("");
 
-  const fetchProducts = (search = "") => {
-    let url = "https://localhost:7026/api/Products/GetProducts";
-    if (search.trim() !== "") {
+  const fetchProducts = () => {
+    let url = "";
+
+    // If search is active, prioritize search API
+    if (search.trim()) {
       url = `https://localhost:7026/api/Products/Search?keyword=${encodeURIComponent(search)}`;
+    } else {
+      const queryParams = new URLSearchParams({
+        category,
+        brand,
+        sortOrder,
+      });
+      url = `https://localhost:7026/api/Products/GetFilteredProducts?${queryParams.toString()}`;
     }
 
     fetch(url)
@@ -35,9 +49,10 @@ const Shop = () => {
       });
   };
 
+  // Run when any filter changes
   useEffect(() => {
-    fetchProducts(); // Load all products initially
-  }, []);
+    fetchProducts();
+  }, [category, brand, sortOrder, search]);
 
   return (
     <Fragment>
@@ -48,11 +63,17 @@ const Shop = () => {
           <Col>
             <div className="p-3">
               <h5 className="pb-3">Filters</h5>
-              <FilterSelect  className="bg-white"/>
+              <FilterSelect
+                onCategoryChange={(value) => setCategory(value)}
+                onBrandChange={(value) => setBrand(value)}
+              />
+              <div className="mt-3">
+                <SortSelect onSortChange={(value) => setSortOrder(value)} />
+              </div>
             </div>
           </Col>
           <Col md={9}>
-            <SearchBar onSearch={fetchProducts} />
+            <SearchBar onSearch={(value) => setSearch(value)} />
             <section>
               <Container>
                 <Row className="justify-content-start mt-4">

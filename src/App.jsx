@@ -30,6 +30,7 @@ import AdminProfile from "./component/admin/AdminProfile";
 import ProductDetails from "./component/user/ProductDetails/ProductDetails";
 import Order from "./component/admin/Order";
 import Checkout from "./component/user/Checkout/Checkout";
+import ThankYou from "./component/user/ThankYou";
 
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
         <Route path="/user/whishlist" element={<Whishlist />} />
         <Route path="/user/userprofile" element={<UserProfile />} />
         <Route path="/user/productdetail/:productId" element={<ProductDetails />} />
-
+        <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/user/checkout" element={<Checkout/>} />
 
         {/* Admin Routes with Layout */}
