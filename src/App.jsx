@@ -32,63 +32,79 @@ import Order from "./component/admin/Order";
 import Checkout from "./component/user/Checkout/Checkout";
 import ThankYou from "./component/user/ThankYou";
 
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-
-
-        {/* User Dashboard Route */}
-        <Route
-          path="/user/userDashboard"
-          element={
-            <ProtectedRoute allowedRole="2">
-              <UserDashBoard />
-            </ProtectedRoute>
-          }
+    <>
+      <Router>
+        <ToastContainer
+          position="top-right"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
         />
-        <Route path="/user/cart" element={<Cart />} />
-        <Route path="/user/product" element={<Product />} />
-        <Route path="/user/shop" element={<Shop />} />
-        <Route path="/user/whishlist" element={<Whishlist />} />
-        <Route path="/user/userprofile" element={<UserProfile />} />
-        <Route path="/user/productdetail/:productId" element={<ProductDetails />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="/user/checkout" element={<Checkout/>} />
 
-        {/* Admin Routes with Layout */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRole="1">
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          {/* Admin Dashboard Route */}
-          <Route path="adminDashboard" element={<AdminDashboard />} />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
 
-          {/* Admin Product Routes */}
-          <Route path="addProduct" element={<AddProduct />} />
-          <Route path="addBrand" element={<AddBrand />} />  {/* Add AddBrand route here */}
-          <Route path="ListProduct" element={<ListProduct />} />
-          <Route path="EditProduct/:productId" element={<EditProduct />} />
-          <Route path="ListBrand" element={<ListBrand />} />
-          <Route path="ListCategory" element={<ListCategory />} />
-          <Route path="addCategory" element={<AddCategory />} />
-          <Route path="editCategory/:id" element={<EditCategory />} />
-          <Route path="editBrand/:brandId" element={<EditBrand />} />
-          <Route path="ListUser" element={<ListUser />} />
-          <Route path="adminprofile" element={<AdminProfile />} />
-          <Route path="order" element={<Order />} />
-        </Route>
-      </Routes>
-    </Router>
+
+          {/* User Dashboard Route */}
+          <Route
+            path="/user/userDashboard"
+            element={
+              <ProtectedRoute allowedRole="2">
+                <UserDashBoard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/user/cart" element={<Cart />} />
+          <Route path="/user/product" element={<Product />} />
+          <Route path="/user/shop" element={<Shop />} />
+          <Route path="/user/whishlist" element={<Whishlist />} />
+          <Route path="/user/userprofile" element={<UserProfile />} />
+          <Route path="/user/productdetail/:productId" element={<ProductDetails />} />
+          <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/user/checkout" element={<Checkout />} />
+
+          {/* Admin Routes with Layout */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRole="1">
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            {/* Admin Dashboard Route */}
+            <Route path="adminDashboard" element={<AdminDashboard />} />
+
+            {/* Admin Product Routes */}
+            <Route path="addProduct" element={<AddProduct />} />
+            <Route path="addBrand" element={<AddBrand />} />  {/* Add AddBrand route here */}
+            <Route path="ListProduct" element={<ListProduct />} />
+            <Route path="EditProduct/:productId" element={<EditProduct />} />
+            <Route path="ListBrand" element={<ListBrand />} />
+            <Route path="ListCategory" element={<ListCategory />} />
+            <Route path="addCategory" element={<AddCategory />} />
+            <Route path="editCategory/:id" element={<EditCategory />} />
+            <Route path="editBrand/:brandId" element={<EditBrand />} />
+            <Route path="ListUser" element={<ListUser />} />
+            <Route path="adminprofile" element={<AdminProfile />} />
+            <Route path="order" element={<Order />} />
+          </Route>
+        </Routes>
+      </Router>
+
+    </>
+
 
   );
 }

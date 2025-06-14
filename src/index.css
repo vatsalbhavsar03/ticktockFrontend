@@ -326,3 +326,10 @@ button.delete ion-icon {
     margin: 10px auto;
   }
 }
+
+
+
+.Toastify {
+  position: absolute !important;
+  z-index: 999999 !important;
+}

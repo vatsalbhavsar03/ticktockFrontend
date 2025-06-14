@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import NavBar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Section from "./Section";
 import SliderHome from "./Slider";
@@ -65,7 +65,8 @@ const UserDashBoard = () => {
                 />
                 <Footer />
             </Fragment>
-        </div>
+
+     </div>
     )
 }
 export default UserDashBoard;

@@ -16,7 +16,7 @@ const Cart = () => {
     const fetchCart = async () => {
         try {
             const res = await axios.get(`${API_BASE_URL}/GetCart?userId=${userId}`);
-            setCartItems(res.data.items);
+            setCartItems(res.data.items || []);
         } catch (error) {
             console.error("Failed to fetch cart:", error);
         }
@@ -44,7 +44,9 @@ const Cart = () => {
     };
 
     const handleCheckout = () => {
-        navigate("/user/checkout", { state: { cartItems } });
+        if (cartItems.length > 0) {
+            navigate("/user/checkout", { state: { cartItems } });
+        }
     };
 
     useEffect(() => {
@@ -62,59 +64,80 @@ const Cart = () => {
             <NavBar />
             <section className="cart-items">
                 <Container>
-                    <Row className="justify-content-center">
+                    <Row className="justify-content-center py-5">
                         <Col md={8}>
-                            {cartItems.map((item) => (
-                                <div className="cart-list" key={item.cartitemId}>
-                                    <Row>
-                                        <Col className="image-holder" sm={4} md={3}>
-                                            <img
-                                                src={`https://localhost:7026${item.imageUrl}`}
-                                                alt={item.productName}
-                                                onError={(e) => {
-                                                    e.target.src = '/fallback-image.png';
-                                                }}
-                                                style={{ cursor: "pointer" }}
-                                            />
-                                        </Col>
-                                        <Col sm={8} md={9}>
-                                            <Row className="cart-content justify-content-center">
-                                                <Col xs={12} sm={9} className="cart-details">
-                                                    <h3>{item.productName}</h3>
-                                                    <h4>
-                                                        ₹{item.price} * {item.quantity}
-                                                        <span> = ₹{item.price * item.quantity}</span>
-                                                    </h4>
-                                                </Col>
-                                                <Col xs={12} sm={3} className="cartControl">
-                                                    <button
-                                                        className="incCart"
-                                                        onClick={() =>
-                                                            updateQuantity(item.cartitemId, item.quantity + 1)
-                                                        }
-                                                    >
-                                                        <AiOutlinePlus />
-                                                    </button>
-                                                    <button
-                                                        className="desCart"
-                                                        onClick={() =>
-                                                            updateQuantity(item.cartitemId, item.quantity - 1)
-                                                        }
-                                                    >
-                                                        <AiOutlineMinus />
-                                                    </button>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                        <button
-                                            className="delete"
-                                            onClick={() => removeItem(item.cartitemId)}
-                                        >
-                                            <AiOutlineClose size={20} />
-                                        </button>
-                                    </Row>
+                            {cartItems.length === 0 ? (
+                                <div style={{padding: "50px 0px" }}>
+                                    <h3>Your cart is empty</h3>
+                                    <button
+                                        style={{
+                                            marginTop: "20px",
+                                            padding: "10px 20px",
+                                            backgroundColor: "#0f3460",
+                                            color: "#fff",
+                                            border: "none",
+                                            borderRadius: "5px",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                        }}
+                                        onClick={() => navigate("/user/shop")}
+                                    >
+                                        🛍️ Continue Shopping
+                                    </button>
                                 </div>
-                            ))}
+                            ) : (
+                                cartItems.map((item) => (
+                                    <div className="cart-list" key={item.cartitemId}>
+                                        <Row>
+                                            <Col className="image-holder" sm={4} md={3}>
+                                                <img
+                                                    src={`https://localhost:7026${item.imageUrl}`}
+                                                    alt={item.productName}
+                                                    onError={(e) => {
+                                                        e.target.src = '/fallback-image.png';
+                                                    }}
+                                                    style={{ cursor: "pointer" }}
+                                                />
+                                            </Col>
+                                            <Col sm={8} md={9}>
+                                                <Row className="cart-content justify-content-center">
+                                                    <Col xs={12} sm={9} className="cart-details">
+                                                        <h3>{item.productName}</h3>
+                                                        <h4>
+                                                            ₹{item.price} * {item.quantity}
+                                                            <span> = ₹{item.price * item.quantity}</span>
+                                                        </h4>
+                                                    </Col>
+                                                    <Col xs={12} sm={3} className="cartControl">
+                                                        <button
+                                                            className="incCart"
+                                                            onClick={() =>
+                                                                updateQuantity(item.cartitemId, item.quantity + 1)
+                                                            }
+                                                        >
+                                                            <AiOutlinePlus />
+                                                        </button>
+                                                        <button
+                                                            className="desCart"
+                                                            onClick={() =>
+                                                                updateQuantity(item.cartitemId, item.quantity - 1)
+                                                            }
+                                                        >
+                                                            <AiOutlineMinus />
+                                                        </button>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                            <button
+                                                className="delete"
+                                                onClick={() => removeItem(item.cartitemId)}
+                                            >
+                                                <AiOutlineClose size={20} />
+                                            </button>
+                                        </Row>
+                                    </div>
+                                ))
+                            )}
                         </Col>
                         <Col md={4}>
                             <div className="cart-total">
@@ -125,18 +148,18 @@ const Cart = () => {
                                 </div>
                             </div>
                             <div className="checkout-btn" style={{ marginTop: "20px" }}>
-
                                 <button
                                     style={{
                                         width: "100%",
                                         padding: "10px",
-                                        backgroundColor: "#0f3460",
+                                        backgroundColor: cartItems.length > 0 ? "#0f3460" : "#ccc",
                                         color: "#fff",
                                         border: "none",
                                         borderRadius: "5px",
-                                        cursor: "pointer",
+                                        cursor: cartItems.length > 0 ? "pointer" : "not-allowed",
                                         fontSize: "16px",
                                     }}
+                                    disabled={cartItems.length === 0}
                                     onClick={handleCheckout}
                                 >
                                     Proceed to Checkout
