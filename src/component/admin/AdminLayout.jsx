@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import {
     FaSignOutAlt,
-    FaBars, 
+    FaBars,
     FaUserShield
 } from "react-icons/fa";
 import { VscWatch } from "react-icons/vsc";
@@ -11,9 +11,10 @@ import { BiSolidCategory } from "react-icons/bi";
 import { TbDeviceWatchFilled } from "react-icons/tb";
 import { AiFillDashboard } from "react-icons/ai";
 import { TbBrandBumble } from "react-icons/tb";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaMoneyBillAlt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-
+import { MdPayment } from "react-icons/md";
+import { GoStarFill } from "react-icons/go";
 
 
 
@@ -70,14 +71,25 @@ const AdminLayout = () => {
                         <TbDeviceWatchFilled style={{ fontSize: "30px" }} />
                         <span>Products</span>
                     </li>
-                     <li onClick={() => navigate("/admin/order")}>
-                        <FaShoppingCart  style={{ fontSize: '30px' }} />
+                    <li onClick={() => navigate("/admin/order")}>
+                        <FaShoppingCart style={{ fontSize: '30px' }} />
                         <span>Orders</span>
                     </li>
+                    <li onClick={() => navigate("/admin/PaymentList")}>
+                        <MdPayment  style={{ fontSize: '30px' }} />
+                        <span>Payments</span>
+                    </li>
+                     <li onClick={() => navigate("/admin/adminReview")}>
+                        <GoStarFill   style={{ fontSize: '30px' }} />
+                        <span>Review</span>
+                    </li>
+
                     <li onClick={() => navigate("/admin/adminprofile")}>
                         <FaUserShield style={{ fontSize: '30px' }} />
                         <span>Admin Profile</span>
                     </li>
+                    
+
                     <li onClick={handleLogout}>
                         <FaSignOutAlt className="icon" />
                         <span>Logout</span>

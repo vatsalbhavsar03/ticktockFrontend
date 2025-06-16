@@ -31,6 +31,8 @@ import ProductDetails from "./component/user/ProductDetails/ProductDetails";
 import Order from "./component/admin/Order";
 import Checkout from "./component/user/Checkout/Checkout";
 import ThankYou from "./component/user/ThankYou";
+import PaymentList from "./component/admin/PaymentList";
+import AdminReviewList from "./component/admin/AdminReviewList";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -99,6 +101,9 @@ function App() {
             <Route path="ListUser" element={<ListUser />} />
             <Route path="adminprofile" element={<AdminProfile />} />
             <Route path="order" element={<Order />} />
+            <Route path="PaymentList" element={<PaymentList />} />
+            <Route path="adminReview" element={<AdminReviewList />} />
+            
           </Route>
         </Routes>
       </Router>
