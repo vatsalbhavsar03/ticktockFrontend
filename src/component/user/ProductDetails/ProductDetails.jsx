@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "./product-details.css";
-import Navbar from "../Navbar/Navbar";
+import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { FaRupeeSign } from "react-icons/fa";
 import axios from "axios";
