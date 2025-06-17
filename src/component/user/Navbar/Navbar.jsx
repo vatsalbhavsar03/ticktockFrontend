@@ -115,6 +115,16 @@ const NavBar = () => {
                 <span className="nav-link-label">Whishlist</span>
               </Link>
             </Nav.Item>
+            <Nav.Item>
+              <Link
+                aria-label="Go to user order Page"
+                className="navbar-link"
+                to="/user/myOrder"
+                onClick={() => setExpand(false)}
+              >
+                <span className="nav-link-label">My Order</span>
+              </Link>
+            </Nav.Item>
 
             <Nav.Item className="user-dropdown" style={{ position: "relative" }}>
               <div
