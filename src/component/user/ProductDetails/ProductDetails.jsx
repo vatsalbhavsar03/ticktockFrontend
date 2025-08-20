@@ -121,7 +121,7 @@ const ProductDetails = () => {
   return (
     <div>
       <Fragment>
-        <Navbar />
+        <NavBar />
         <section className="product-page">
           <Container>
             <Row className="justify-content-center">

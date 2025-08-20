@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign, FaHeart, FaRegHeart } from "react-icons/fa";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
@@ -71,6 +71,38 @@ const Wishlist = () => {
       });
   };
 
+  const addToWishlist = (product) => {
+    axios
+      .post("https://localhost:7026/api/Wishlist/AddToWishlist", {
+        userId: parseInt(userId),
+        productId: product.productId,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added to wishlist");
+          fetchWishlist(); // Refresh wishlist
+        } else {
+          toast.info(res.data.message || "Already in wishlist");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Failed to add to wishlist");
+      });
+  };
+
+  const toggleWishlist = (product) => {
+    const isInWishlist = wishlistProducts.some(
+      (item) => item.product.productId === product.productId
+    );
+
+    if (isInWishlist) {
+      removeFromWishlist(product.productId);
+    } else {
+      addToWishlist(product);
+    }
+  };
+
   const addToCart = (product) => {
     const cartItem = {
       userId: parseInt(userId),
@@ -122,74 +154,91 @@ const Wishlist = () => {
                 </div>
               ) : (
                 <Row>
-                  {wishlistProducts.map((item) => (
-                    <Col
-                      key={item.product.productId}
-                      md={3}
-                      sm={6}
-                      xs={12}
-                      className="product mtop"
-                    >
-                      <div className="wishlist-item">
-                        <img
-                          src={`https://localhost:7026${item.product.imageUrl}`}
-                          alt={item.product.name}
-                          onError={(e) => {
-                            e.target.src = "/fallback-image.png";
-                          }}
-                          style={{ cursor: "pointer", width: "100%" }}
-                          onClick={() =>
-                            (window.location.href = `/user/productdetail/${item.product.productId}`)
-                          }
-                        />
-                        <h3>{item.product.name}</h3>
-                        <p
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontWeight: "bold",
-                            color: "#0f3460",
-                            marginBottom: "0px",
-                          }}
-                        >
-                          <FaRupeeSign style={{ marginRight: "4px" }} />
-                          {item.product.price}
-                        </p>
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            color: "#666",
-                            marginTop: "10px",
-                          }}
-                        >
-                          Added on:{" "}
-                          {new Date(item.wishlistDate).toLocaleDateString()}
-                        </p>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            marginTop: "10px",
-                          }}
-                        >
-                          <button
-                            onClick={() => addToCart(item.product)}
-                            className="addtoCart"
-                          >
-                            Add to Cart
-                          </button>
-                          <button
+                  {wishlistProducts.map((item) => {
+                    const product = item.product;
+                    return (
+                      <Col
+                        key={product.productId}
+                        md={3}
+                        sm={6}
+                        xs={12}
+                        className="product mtop"
+                      >
+                        <div className="wishlist-item">
+                          <img
+                            src={`https://localhost:7026${product.imageUrl}`}
+                            alt={product.name}
+                            onError={(e) => {
+                              e.target.src = "/fallback-image.png";
+                            }}
+                            style={{ cursor: "pointer", width: "100%" }}
                             onClick={() =>
-                              removeFromWishlist(item.product.productId)
+                              (window.location.href = `/user/productdetail/${product.productId}`)
                             }
-                            className="remove"
+                          />
+
+                          {/* Heart icon toggle */}
+                          <div
+                            onClick={() => toggleWishlist(product)}
+                            style={{
+                              position: "absolute",
+                              top: "10px",
+                              right: "10px",
+                              cursor: "pointer",
+                              fontSize: "20px",
+                              color: "red",
+                            }}
                           >
-                            Remove
-                          </button>
+                            <FaHeart />
+                          </div>
+
+                          <h3>{product.name}</h3>
+                          <p
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontWeight: "bold",
+                              color: "#0f3460",
+                              marginBottom: "0px",
+                            }}
+                          >
+                            <FaRupeeSign style={{ marginRight: "4px" }} />
+                            {product.price}
+                          </p>
+                          <p
+                            style={{
+                              fontSize: "12px",
+                              color: "#666",
+                              marginTop: "10px",
+                            }}
+                          >
+                            Added on:{" "}
+                            {new Date(item.wishlistDate).toLocaleDateString()}
+                          </p>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              marginTop: "10px",
+                            }}
+                          >
+                            <button
+                              onClick={() => addToCart(product)}
+                              className="addtoCart"
+                            >
+                              Add to Cart
+                            </button>
+                            <button
+                              onClick={() => removeFromWishlist(product.productId)}
+                              className="remove"
+                            >
+                              Remove
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </Col>
-                  ))}
+                      </Col>
+                    );
+                  })}
                 </Row>
               )}
             </section>
